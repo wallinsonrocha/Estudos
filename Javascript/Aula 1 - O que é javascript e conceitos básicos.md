@@ -12,7 +12,9 @@ Para poder testar o javascript, você pode acessar a opção de "Console" no seu
 
 ![Console](./Fotos/Javascript%20console.png)
 
-Recomenda-se, principalmente, utilizar algum editor de código como o Sublime ou o Vs Code. Além disso, implementá-lo no HTML irá melhorar as suas experiências. Caso você ainda não saiba implementá-lo, basta seguir a seguinte orientação:
+Recomenda-se, principalmente, utilizar algum editor de código como o Sublime ou o Vs Code. Nas anotações, você verá muitos exemplos com o VsCode.
+
+Além disso, implementá-lo no HTML irá melhorar as suas experiências. Caso você ainda não saiba implementá-lo, basta seguir a seguinte orientação:
 
 1. Criar uma pasta com um arquivo chamado  "index.html" e adicionar o seguinte código:
 ```
@@ -41,6 +43,18 @@ Recomenda-se, principalmente, utilizar algum editor de código como o Sublime ou
 ```
 
 Assim que você criá-lo, basta ir no seu navegador, apetar o botão F12 ou ir em inspecionar com o botão direito do Mouse e ir até Console. Lá irá começar a nossa brincadeira.
+
+## Instalação a extensão Code Runner Extension do Vs Code
+
+Essa será a maneira que mais utilizaremos no início.
+
+Para isso, nós iremos baixar e instalar o [VsCode](https://code.visualstudio.com/download). Após isso, iremos ir até extensões (estará do lado esquedo como na foto abaixo) e iremos procurar e instalar o Code Runner Extension.
+
+![Code Runner Extension](./Fotos/Code%20Runner%20Extension%201.png)
+![Code Runner Extension](./Fotos/Code%20Runner%20Extension%202.png)
+
+Sempre que quisermos compilar algum código javascript basta ir no botão de play ou apertar "Ctrl+Alt+N".
+![Play](./Fotos/Play.png)
 
 ## O que são variáveis?
 As variáveis, no javascript, é onde nós armazenamos os valores. Há várias maneiras de delcarar variáveis:

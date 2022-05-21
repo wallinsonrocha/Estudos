@@ -12,6 +12,7 @@ Sendo assim, resolvi criar este repositório a fim de ajudar qualquer um que est
 
 ### Conteúdos:
 - [Javascript](https://github.com/wallinsonrocha/Estudos/tree/master/Javascript)
+- [Typescript](https://github.com/wallinsonrocha/Estudos/tree/master/Typescript)
 
 ### Um verso
 > *"Respondeu Jesus: "Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim"*.
