@@ -40,13 +40,13 @@ npm init -y
 ```
 
 ## Instalação
-1. Assim que foi dada a inicialização, nós podemos instalar o Typescript a partir do seguinte comando:
+### 1. Assim que foi dada a inicialização, nós podemos instalar o Typescript a partir do seguinte comando:
 ```
 npm i typescript -D
 ```
 Dessa forma, ele irá instalar as dependências para rodar o typescript.
 
-2. Nós iremos instalar uma dependencia no arquivo package.json que foi criado na nossa pasta. Podemos colocar manualmente ou com o seguinte comando (recomendado):
+### 2. Nós iremos instalar uma dependencia no arquivo package.json que foi criado na nossa pasta. Podemos colocar manualmente ou com o seguinte comando (recomendado):
 ```
 npm i ts-node -D
 ```
@@ -65,7 +65,7 @@ Após isso, nós iremos criar um arquivo "settings.json" e configurar a extensã
 ![Pasta](./Fotos/Exemplo%20typescript.png)
 ![Interpret](./Fotos/Transpile.png)
 
-3. tsconfig.json
+### 3. tsconfig.json
 Para Instalá-lo, basta rodar no terminal o seguinte comando:
 ```  
 npx tsc --init
@@ -90,5 +90,5 @@ Após isso, no mesmo arquivo (tsconfig.json), logo após o "compilerOptions" ire
 ]
 ```
 
-4. Para finalizar, nós iremos criar uma pasta chamada "src". Lá nós iremos colocar os nossos arquivos "ts" (extensão do typescript).
+### 4. Para finalizar, nós iremos criar uma pasta chamada "src". Lá nós iremos colocar os nossos arquivos "ts" (extensão do typescript).
 ![Src](./Fotos/src.png)
