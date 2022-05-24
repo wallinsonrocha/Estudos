@@ -81,6 +81,10 @@ Assim será criado um arquivo "tsconfig.json". Nele nós iremos habilitar e conf
 "outDir": "./dist", // Pasta que será criada com os arquivos js ao compilar o ts com "npm tsc" no terminal
 ...
 ```
+Através desse ./dist que os nossos arquivos compilados estarão. Para compilar basta por no terminal:
+```
+npx tsc
+```
 
 Após isso, no mesmo arquivo (tsconfig.json), logo após o "compilerOptions" iremos adicionar o "include".
 ```
