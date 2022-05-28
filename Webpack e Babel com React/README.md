@@ -81,7 +81,7 @@ module.export = {
 ### Caso não tenha adicionado o babel antes:
 No terminal:
 ```
-npm install --save-dev @babel/cli @babel/preset-env @babel/core @babel/preset-react
+npm install --save-dev @babel/cli @babel/preset-env @babel/core @babel/preset-react babel-loader
 ```
 
 ### Criação do .babelrc
