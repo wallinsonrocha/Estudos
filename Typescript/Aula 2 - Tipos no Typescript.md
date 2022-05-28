@@ -51,7 +51,7 @@ let pessoa: {nome: string; idade: number; adulto?: boolean} = {
 ```
 > O '?' indica dizer que não somos obrigado a especificá-lo. Caso não fosse especificado, ele será undefinid.
 
-## Com funções
+## Em funções
 Semelhante ao objeto
 ```
 function Soma(x: number, y:number){
@@ -106,8 +106,9 @@ Caso seja necessário, nós podemos atribuir à tupla o "readonly" para que ela 
 const dadosCliente3: readonly [number, string, ...string[]] = [1, 'Luiz']
 ```
 
-## Union Type
-Serve para indicar que um parâmetro pode admitir um tipo ou de outro.
+## Union Type e Intersection Type
+### Union type
+Serve para indicar que um parâmetro ou variável pode admitir um ou outro tipo.
 ```
 function AddOrConcat(a: number | string, b: number | string): number | string {
     if (typeof a === 'number' && typeof b === 'number') return a+b;
@@ -117,3 +118,62 @@ function AddOrConcat(a: number | string, b: number | string): number | string {
 console.log(10, 20); // 30
 console.log (10, '20') // 10 e 20
 ```
+
+### Intersection type
+Serve para indicar que um parâmetro ou variável deve ter um tipo ou outro tipo.
+```
+type Nome = {nome: string};
+type Sobrenome = {sobrenome: string};
+type Idade = {idade: number};
+
+type Pessoa = Nome & Sobrenome & Idade;
+```
+Dessa maneira, o tipo Pessoa é obrigado a ter todos os tipos que foram impostas a ela.
+
+## Type Alias
+É um tipo personalizado por nós. Geralmente é utilizado para tipar objetos.
+```
+type Idade = number;
+type Pessoa = {
+    nome: string;
+    idade: Idade;
+    salario: number;
+    corPreferida?: string;
+} 
+
+const pessoa: Pessoa = {
+    nome: 'Cleiton';
+    idade: 30;
+    salario: 8000;
+}
+```
+
+Podemos até mesmo combinar com tipos literais e Union type:
+```
+type CorRGB = 'red' | 'green' | 'blue';
+type CorCMYB = 'Cian' | 'Magenta' | 'Amarelo' | 'Preto';
+type CorPreferida = CorRGB | CorCMYB;
+
+function setCorPreferida(pessoa: Pessoa, cor: corPreferida): Pessoa {
+    return(...pessoa, corPreferida: cor);
+}
+```
+
+## Tipo com função
+Aqui nós podemos criar um tipo para ser aplicada em funções. Dessa forma nós podemos retornar o tipo do valor:
+```
+type User = {username: string; password: string};
+type VerifyUserFn = (user: User, sentValue: User) => boolean;
+
+const verifyUser: VerifyUserFn = (user, sentValue) => {
+    return(
+        user.username === sentValue.username && user.password === sentValue.password
+    );
+}
+
+const bdUser = {username: 'joao', password: '123456'};
+const sentUser = {username: 'joao', password: '123456'};
+
+const loggedIn = verifyUser(bdUser, sentUser); 
+console.log(loggedIn) //true
+``` 

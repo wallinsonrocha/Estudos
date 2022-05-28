@@ -93,13 +93,13 @@ Após isso, precisamos adicionar os arquivos na nossa branch do repositório rem
 
 Caso deseje adicionar todos os arquivos no repositório remoto.
 ```
-git add -A
+git add -A ou * ou .
 ```
 Geralmente é utilizado.
 
 Caso queira adicionar um arquivo específico.
 ```
-git add <nome do arquivo e extensão>
+git add <nome dos arquivos separados por espaço com a extensão(.js, .ts e etc) deles>
 ```
 
 ### git commit
