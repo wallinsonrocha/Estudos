@@ -101,10 +101,12 @@ Após isso, no arquivo webpack.config.js, após "output: {...}, " nós iremos ad
 ...,
 module: {
     rules: [
-        teste: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-            loader: "babel-loader"
+        {
+            teste: /\.(js|jsx)$/,
+            exclude: /node_modules/,
+            use: {
+                loader: "babel-loader"
+            }
         }
     ]
 }
