@@ -1,5 +1,5 @@
 ## Instalação do Webpack
-> Obs.: Essa instrução abaixo serve apenas no caso de você não ter usado o "create-reacte-app". Caso você tenha usado, isso pode ser ignorado, porém, algumas configurações e nomes nos script do arquivo package.json, deverão ser mudados.
+> Obs.: Essa instrução abaixo serve apenas no caso de você não ter usado o "create-reacte-app". Caso você tenha usado, isso pode ser ignorado, porém, algumas configurações e nomes nos script do arquivo package.json, deverão ser mudados. Além do script tem também os caminhos. Todos devem ser analizados.
 
 Antes de seguir os passo abaixo, devemos iniciar o node em nosso projeto criando o arquivo json.
 ```
