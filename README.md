@@ -10,10 +10,6 @@ No mundo da programação, com o passar do tempo, nós aprendemos muitas coisas 
 
 Sendo assim, resolvi criar este repositório a fim de ajudar qualquer um que esteja iniciando os seus estudos em alguma linguagem ou tecnologia. Em breve haverá mais conteúdos para serem estudados. Esperem que gostem. Forte abraço e bons estudos.
 
-### Conteúdos:
-- [Javascript](https://github.com/wallinsonrocha/Estudos/tree/master/Javascript)
-- [Typescript](https://github.com/wallinsonrocha/Estudos/tree/master/Typescript)
-
 ### Um verso
 > *"Respondeu Jesus: "Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim"*.
 > João 14:6 
