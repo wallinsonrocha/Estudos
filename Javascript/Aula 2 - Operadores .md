@@ -1,5 +1,7 @@
 # Aula 2
 
+> Obs, alguns operadores estão com entre " ". Isso foi feito para evitar o conflito de código do markdown. O mesmo teve que ser feito com o " || " , pois, para que ele aparecesse escrevi sua simbologia literalmente "Barra dupla vertical". Em breve isso será corrigido.
+
 Os operadores, no javascript e outras linguagens de programação podem exercer diversas funções. geralmente eles são usados para auxiliar nas operações matemática ou estabelecer condições em um laço de repetição ou de comparação.
 
 ## Operadores de atribuição.
@@ -25,10 +27,10 @@ Operador | Utilização | Exemplo
 == | Utilizado para verificar igualdade. Ele é diferente de "=" pois não atribui valor algum. | 3 == 3
 != | Serve para verificar se é diferente. | 3 != 2
 === | Este é semelhante ao "==" porém, ele verifica se o tipo da variável também é igual. Para que a condição seja verdadeira, não podemos ter algo como '3' === 3 | '2' === '2'
-> | Símbolo de maior que. | 3 > 2
->= | Símbolo de maior ou igual que. | 3 >= 2 ou 3 >= 3
-< | Símbolo de menor que. | 2 < 3
-<= | Símbolo de menor ou igual que. | 2 <= 3 ou 2 <= 2
+" > " | Símbolo de maior que. | 3 > 2
+" >= " | Símbolo de maior ou igual que. | 3 >= 2 ou 3 >= 3
+" < " | Símbolo de menor que. | 2 < 3
+" <= " | Símbolo de menor ou igual que. | 2 <= 3 ou 2 <= 2
 
 ## Operadores aritiméticos.
 Utilizados em operações matemáticas.
@@ -51,6 +53,6 @@ Utilizados muito para estabelecer condições.
 Operador | Utilização | Exemplo
 -------- | ---------- | -------
 && | E. Utilizado para dizer que uma condição e outra devem ser atendidas para continuar. | x == 3 && y != 4
-|| | Ou. Utilizados para dizer que uma ou outra condição deve ser atendida. | x == 2 || y != 2
+Barra dupla vertical | Ou. Utilizados para dizer que uma ou outra condição deve ser atendida. | x == 2 Barra dupla vertical y != 2
 
 Esses são os mais utilizados.
