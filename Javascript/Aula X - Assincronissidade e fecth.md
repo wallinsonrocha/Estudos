@@ -76,8 +76,9 @@ async function fecthMovies(){
 ```
 
 Exemplo:
-Usando método POST
+### Usando método POST
 ```
+const data = ...
 fecth('https://endereco-api.com/', {
     method: 'POST',
     cache: 'no-cache',
@@ -90,16 +91,31 @@ fecth('https://endereco-api.com/', {
 ```
 Com os métodos POST nós enviamos algo para algum banco de dado ou algo do tipo. Quando usamos o POST, devemos converter para Json usando JSON.strinfy().
 
-Usando método GET
+### Usando método GET
 ```
-fecth('https://endereco-api.com/', {
-    method: 'GET',
-    cache: 'no-cache'
-})
+fecth('https://endereco-api.com/')
     .then(response => response.json())
     .then(json => console.log(json))
 
 // Retorna uma promise
+```
+
+### Usando o método Delete
+```
+fecth('https://endereco-api.com/cliente/4', {
+    mothod: 'delete'
+})
+    .then(response => response.json())
+```
+
+### Usando o método Put:
+```
+const data = ...
+fecth('https://endereco-api.com/cliente/4', {
+    mothod: 'put',
+    body: JSON.stringify(data)
+})
+    .then(response => response.json())
 ```
 
 ## Alguns métodos
@@ -107,3 +123,56 @@ fecth('https://endereco-api.com/', {
 2. GET - Pegar
 3. PUT - Atualizar
 4. DELETE - Deletar
+
+# Axios
+O axios é uma api que trabalha com o XmlHttpRequest (ou seja, diferente do fecth, ele consegue trabalhar em navegadores mais antgos).
+Para instalar o axios, no terminal digitamos:
+```
+npm install axios
+```
+E, em seguida devemos importá-lo.
+```
+import axios from 'axios';
+```
+
+### Usando método POST
+```
+const data = ...
+axios.post('https://endereco-api.com/', {
+    nome: 'Nome de algúem',
+    endereco: 'Rua tal casa tal',
+    area: 'letras',
+    mais: JSON.stringify(data) //Constante
+})
+    .then(response => response.json())
+    .then(json => console.log(json))
+
+// Retorna uma promise
+```
+
+### Usando método GET
+```
+axios.get('https://endereco-api.com/')
+    .then(response => response.json())
+    .then(json => console.log(json))
+
+// Retorna uma promise
+```
+
+### Usando o método Delete
+```
+axios.delete('https://endereco-api.com/cliente/4')
+    .then(response => response.json())
+```
+
+### Usando o método Put:
+```
+const data = ...
+axios.put('https://endereco-api.com/cliente/4', {
+    nome: 'Nome de algúem',
+    endereco: 'Rua tal casa tal',
+    area: 'letras',
+    mais: JSON.stringify(data) //Constante
+})
+    .then(response => response.json())
+```
