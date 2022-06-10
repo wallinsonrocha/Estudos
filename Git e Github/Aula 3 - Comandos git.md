@@ -126,3 +126,9 @@ git push origin master
 ```
 
 Após isso, você já poderá ver o seu arquivo lá no repositório do Github.
+
+### git pull
+Usado para pegar as modificações que foram feitas no repositório do GitHub. Suponhamos que fora criado um repositório onde nós armazenamos os nossos arquivos usando o push. Mas, por algum motivo, depois de suas alterações salvas, ela recebeu outra alteração que não foi fe3ita pelo seu repositório remoto. Para pegá-las, você deve dar um pull.
+```
+git pull origin master
+```
