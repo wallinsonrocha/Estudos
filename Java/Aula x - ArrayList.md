@@ -76,6 +76,8 @@ lista.isEmpty();
 ```
 Nesse caso, ele irá apenas fazer a verificação se a lista está vazia ou não.
 
+---
+
 ## Métodos com Collections
 
 ### Min

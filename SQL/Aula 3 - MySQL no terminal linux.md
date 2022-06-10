@@ -16,6 +16,8 @@ Logo após, você irá precisar criar um usuário e senha para acessar o seu MyS
 CREATE USER '<novo_usuário>'@'localhost' IDENTIFIED BY '<senha>'
 ```
 
+---
+
 ## Garantindo privilégios ao usuário criado
 Essa etapa é importante para fazer a criação de bancos e manipulação.
 ```
@@ -57,6 +59,8 @@ Finalmente você pode excluir completamente um usuário existente:
 ```
 DROP USER '<usuário>'@'localhost';
 ```
+
+---
 
 ## Alguns comandos
 ### Listar os banco de dados

@@ -54,6 +54,8 @@ set.isEmpty();
 ```
 Nesse caso, ele irá apenas fazer a verificação se o set está vazio ou não.
 
+---
+
 ## Métodos com Collections
 
 ### Min

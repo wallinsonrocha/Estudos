@@ -56,6 +56,8 @@ Para isso, nós iremos baixar e instalar o [VsCode](https://code.visualstudio.co
 Sempre que quisermos compilar algum código javascript basta ir no botão de play ou apertar "Ctrl+Alt+N".
 ![Play](./Fotos/Play.png)
 
+---
+
 ## O que são variáveis?
 As variáveis, no javascript, é onde nós armazenamos os valores. Há várias maneiras de delcarar variáveis:
 
@@ -78,6 +80,8 @@ const pi = 3,14;
 ```
 
 > Obs: Quando uma variável é declarada, ela deve começar com letras minusculas e não pode iniciar com algum caractere especial ou numeração. Caso seja um nome longo, escrevemos no estilo "camelCase". Exemplo "numeroRomano1".
+
+---
 
 ## Tipos de valores:
 Ao declarar uma variável, quando armazenamos algum valor, ele pode ser de vários tipos (esses tipos são automáticos. São identificados assim que você implementa algum valor).

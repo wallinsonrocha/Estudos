@@ -25,6 +25,7 @@ git config --global core.editor vscode
 git config --list
 ```
 
+---
 
 ## Comandos básicos
 ### git init

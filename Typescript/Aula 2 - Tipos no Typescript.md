@@ -1,3 +1,5 @@
+# Aula 2
+
 Como nós vimos na aula passada, podemos definir qual será o tipo que alguma variável terá.
 
 ## Tipos básicos
@@ -18,11 +20,15 @@ Definimos se ela terá o valor de verdadeiro ou falso
 let adulto: boolean = true;
 ```
 
+---
+
 ## É obrigatório colocar o tipo quando seguido de algum valor?
 Não, não é obrigatório. Se nós declaramos uma variável e, em seguida, depositamos algum valor nela, o seu tipo será definido automaticamente.
 ```
 let nome = 'Wallinson' // Esse tipo será, automaticamente, string
 ```
+
+---
 
 ## Com array
 Para trabalhar com os arrays, na declaração dela, devemos atribuir o seu tipo dessa forma:
@@ -39,6 +45,8 @@ Caso seja necessário, nós podemos atribuir o "readonly" para que ela seja imut
 const numeros: readyonly number[] = [1, 2];
 const nomes: ReadyonlyArray<string> = ['Olivia', 'Maria'];
 ```
+
+---
 
 ## Com objetos
 Com objetos o sistema é semelhante
@@ -59,6 +67,8 @@ function Soma(x: number, y:number){
 }
 ```
 > Nesse caso, ele irá retornar um number.
+
+---
 
 ## Tipo any e void
 ### Any
@@ -83,6 +93,8 @@ noReturn('Wallinson', 'Sarah', 'Nicolas', 'Sophia', 'Nicole');
 ```
 > Nesse caso, o operador rest irá ler um array do tipo string. Nesse caso a sua especificação para tipagem é "string[]".
 
+---
+
 ## Tipo tupla
 O tipo tupla não é nativo do javascript, mas podemos ter acesso a ele com o typescript. Mas, diferente da linguagem python, nós podemo mudar os seu valores.
 ```
@@ -105,6 +117,8 @@ Caso seja necessário, nós podemos atribuir à tupla o "readonly" para que ela 
 ```
 const dadosCliente3: readonly [number, string, ...string[]] = [1, 'Luiz']
 ```
+
+---
 
 ## Union Type e Intersection Type
 ### Union type
@@ -129,6 +143,8 @@ type Idade = {idade: number};
 type Pessoa = Nome & Sobrenome & Idade;
 ```
 Dessa maneira, o tipo Pessoa é obrigado a ter todos os tipos que foram impostas a ela.
+
+---
 
 ## Type Alias
 É um tipo personalizado por nós. Geralmente é utilizado para tipar objetos.

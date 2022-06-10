@@ -62,6 +62,8 @@ ou
 (() => 5)() 
 ```
 
+---
+
 ## Parâmetros
 É através dos parâmetros que nós podemos indicar os valores que a função irá analisar. Elas são definidas dentro dos parênteses. Eles são separados por vírgula.
 ```

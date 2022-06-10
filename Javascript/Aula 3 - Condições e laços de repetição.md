@@ -80,6 +80,8 @@ switch(x){
 
 Esse exemplo acima poderia ser mais simples usando o operador módulo (%) em um if e else.
 
+---
+
 ## Laços de repetição.
 
 ### for

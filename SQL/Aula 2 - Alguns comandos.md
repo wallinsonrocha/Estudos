@@ -58,10 +58,12 @@ SELECT COUNT(CustomerID), Country FROM Customers GROUP BY Country;
 ```
 Selecionando Country em Costumers agrupando-os por Country, nós contamos quantos IDs existem.
 
-# Intercessão entre tabelas 
+---
+
+## Intercessão entre tabelas 
 Para isso, necesseitamos de duas tabelas que tenham algum tipo de relacionamento cruzado com os dados. Então, para isso, suponhamos que existem 2 tabelas A e B. Nelas duas foram armazenados chaves "Nome" como parâmetro. E depois adicionamos alguns valores a essa chave.
 
-## Join
+### Join
 ```
 SELECT * FROM clientes AS c JOIN pedidos AS p ON c.idcliente = p.idpedidos
 ```
@@ -71,8 +73,9 @@ SELECT * FROM clientes AS c JOIN pedidos AS p ON c.idcliente = p.idpedidos
 JOIN produtos AS pd ON p.idcliente = pd.idproduto
 ```
 
+---
 
-# Primary Key
+## Primary Key
 A primary Key é muito importante ao criar uma tabela. Com a primary key nós podemos identificar algum elemento da tabela com um número que apenas ele tem. Geralmente é utilizado em IDs.
 ```
 CREATE TABLE pessoas (

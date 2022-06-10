@@ -39,6 +39,8 @@ O resultado ainda seria NaN, mas, na construção do código, diferente do javas
 npm init -y
 ```
 
+---
+
 ## Instalação
 ### 1. Assim que foi dada a inicialização, nós podemos instalar o Typescript a partir do seguinte comando:
 ```

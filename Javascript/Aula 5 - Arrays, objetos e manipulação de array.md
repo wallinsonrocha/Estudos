@@ -70,6 +70,8 @@ let pessoa = {
 console.log(pegarNomeCompleto(pessoa));
 ```
 
+---
+
 ## Exploração em Objeto e Array
 
 **Key**: Extrai as palavras chaves de um objeto/array:
@@ -86,6 +88,8 @@ Object.values(objeto ou array);
 ```
 Object.entries(objeto ou array);
 ```
+
+---
 
 ## Manipulação de arrays
 

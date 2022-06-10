@@ -11,6 +11,8 @@ Caso você use linux e prefira instalar pelo terminal, basta digitar:
 sudo apt-get install git
 ```
 
+---
+
 # Github? SSH?
 Após a instalação, você irá precisar de uma plataorma para fazer a hospedagem dos seus repositórios. No nosso caso iremos usar o GitHub.
 

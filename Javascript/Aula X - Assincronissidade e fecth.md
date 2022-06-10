@@ -118,13 +118,17 @@ fecth('https://endereco-api.com/cliente/4', {
     .then(response => response.json())
 ```
 
+---
+
 ## Alguns métodos
 1. POST - Criar
 2. GET - Pegar
 3. PUT - Atualizar
 4. DELETE - Deletar
 
-# Axios
+---
+
+## Axios
 O axios é uma api que trabalha com o XmlHttpRequest (ou seja, diferente do fecth, ele consegue trabalhar em navegadores mais antgos).
 Para instalar o axios, no terminal digitamos:
 ```
