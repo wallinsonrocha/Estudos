@@ -48,7 +48,7 @@ cd home/user/.ssh/
 Lá dentro haverá a chave pública e a chave privada. Você poderá ver pelo terminal usando o comando "ls".
 Você poderá abrir e copiar o conteúdo que está lá ou expor o conteúdo no terminal usando:
 ```
-cat id_ed25519.pub
+cat id_ed25519.pu
 ```
 Ela será necessária quando formos registrá-la no GitHub.
 
