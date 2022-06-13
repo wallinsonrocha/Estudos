@@ -22,6 +22,7 @@ Após fazer o seu cadastro na github, iremos criar a chave SSH para ficar salva 
 Os exemplos abaixos são semelhantes no Windows.
 
 ## Chave SSH no linux
+> A partir daqui, você já deve ter o seu git configurado em sua máquina. Ela deve ter o usuário, email... tudo configurado. Para fazer esse processo, você pode ir à aula 3 e, em seguida, assim que terminar o processo de configuração, poderá voltar pra cá.
 
 ### 1. Criação
 Para isso, devemos abrir o terminal e digitar:

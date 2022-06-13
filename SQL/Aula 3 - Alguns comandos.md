@@ -1,5 +1,27 @@
 # Aula 2
 
+## Criando banco de dados
+Para criar, basta dar o seguinte comando:
+```
+CREATE DATABASE <nome>;
+```
+
+## Para usar o banco de dados
+Para usar o banco desejado:
+```
+USE <nome>;
+```
+
+## Criar tabela
+Com o banco de dados selecionado< para criar tabela:
+```
+CREATE TABLE pessoa (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(20) NOT NULL,
+    estado CHARACTER(2) NOT NULL
+);
+```
+
 ## Adicionando dados
 Para inserir os dados, nós damos o seguinte comando:
 ```
@@ -9,17 +31,17 @@ Observe que a sintaze é os atributos que queremos colocar e depois os valores.
 
 ## Procurando algo na tabela.
 ```
-SELECT * FROM 'pessoa'
+SELECT * FROM pessoa;
 ```
 
 Nesse caso ele busca toda a tabela. Caso seja algo especico de alguém:
 ```
-SELECT * FROM 'pessoa' WHERE id=1
+SELECT * FROM pessoa WHERE id=1;
 ```
 
 Poderíamos, por exemplo, pegar o nome e o nascimento da pessoa cadastrada:
 ```
-SELECT nome, nascimento FROM 'pessoa'
+SELECT nome, nascimento FROM pessoa;
 ```
 
 ## Atualizando algo na tabela
@@ -75,13 +97,29 @@ JOIN produtos AS pd ON p.idcliente = pd.idproduto
 
 ---
 
-## Primary Key
+## PRIMARY KEY
 A primary Key é muito importante ao criar uma tabela. Com a primary key nós podemos identificar algum elemento da tabela com um número que apenas ele tem. Geralmente é utilizado em IDs.
 ```
 CREATE TABLE pessoas (
-    id INT NOT NULL PRIMARY KEY AUTOINCREMENT,
+    id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ...
-)
+);
 ```
 Ao colocar o PRIMARY KEY e o AUTOINCREMENTE, nós estaremos declarando que o id é uma chave primária e que pode ser autoinplementada com o AUTOINCREMENT.
 Adicionando o NOT NULL estaremos dizendo que ele não poderá ser nulo. Ou seja, deve ter, obrigatoriamente, algo nela.
+
+## NOT NULL
+O not null indica que essa chave não poderá ser nula. Ou seja, algum valor deverá ser implementada nela.
+```
+CREATE TABLE pessoas (
+    nome VARCHAR(20) NOT NULL
+);
+```
+
+## AUTO_INCREMENT
+Com essa instrução indicamos que aquela chave irá admitir algum valor caso não seja colocado.
+```
+CREATE TABLE pessoas (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT
+);
+```
