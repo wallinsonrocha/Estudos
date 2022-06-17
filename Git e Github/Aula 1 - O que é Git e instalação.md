@@ -27,7 +27,7 @@ Os exemplos abaixos são semelhantes no Windows.
 ### 1. Criação
 Para isso, devemos abrir o terminal e digitar:
 ```
-ssh-keygen -t ed25519 -C <email
+ssh-keygen -t ed25519 -C <email>
 ```
 Esse "ed25519" é o tipo de criptografia. Vale ressaltar que o email usado deve ser o mesmo que foi cadastrado no Github.
 

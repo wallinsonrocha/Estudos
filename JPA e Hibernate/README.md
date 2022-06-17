@@ -100,6 +100,15 @@ Para mapear o ID e implementar o id de forma automática.
 private Integer id;
 ```
 
+## @Colum
+Além disso, nós também podemos definir o nome que estará em alguma coluna caso quisermos alterar. Como valor padrão, ele vem o nome da propriedade que colocamos.
+```
+@Id
+@GeneratedValue(strategy= GenerationType.IDENTITY)
+@Colum(name = "id_name")
+private Integer id;
+```
+
 ---
 
 ## EntityManeger
