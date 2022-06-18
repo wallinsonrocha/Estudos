@@ -2,7 +2,9 @@
 Usado como implementação ao JPA trabalhando, principalmente, na percistencia de dados.
 
 ## Instalação
-Para iniciar o projeto, nós iremos no site do [spring initializr](https://start.spring.io/). Mas, dessa vez, nós iremos implementar a dependência **Spring Data JPA** e do Banco de dados. No meu caso, **MySQL Driver**.
+Para iniciar o projeto, nós iremos no site do [spring initializr](https://start.spring.io/). Mas, dessa vez, nós iremos implementar a dependência **Spring Data JPA**, **MySQL Driver**, **Spring Web**, **Validation**. Caso esolha fazer testes, podemos instalar as dependências do H2.
+
+![Mostrando as dependências](./Fotos/dependencias%20spring.png)
 
 ## JpaRepository
 Quando vamos criar uma classe para ser considerada uma tabela, fazemos normalmente de acordo coma o mapeamento do Jpa. O SprintgData vai atuar na implementação dessas datas.
@@ -27,7 +29,8 @@ public class StartApp implements CommandLineRuner{
 }
 ```
 
-## Conectando com o MySQL.
+## Conectando com o MySQL ou H2.
+### MySQL
 Para isso, no arquivo **apllication.properties**, adicionamos esse arquivo:
 (Não esqueça de editar)
 ```
@@ -62,13 +65,62 @@ spring.datasource.password=ThePassword
 spring.jpa.properties.hibernate.jdbc.lab.non_contextual_creation=true
 ```
 
-Além disso, devemos adicionar a **dependência maven** do nosso banco de dados. Neste caso, MySQL.
+### H2
+Criemos um arquivo chamado **application-test.properties**.
+Nele colocaremos:
+```
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
+
+E, dentro do arquivo **application.properties**, adicionamos:
+```
+spring.profiles.active=test
+spring.jpa.open-in-view=true
+```
+
+Após isso, recomenda-se criar uma classe para configuração. Criemos, pois, o pacote config com uma classe chamada TestConfig. Dentro dela, nós iremos identificar para o spring que ela é uma classe de configuração com a seguinte anotation: **@Configuration** e, para torná-la específica para as configurações de testes, colocaremos **@Profile("test")**, que é o mesmo nome que colocamos no profile de application.properties. Além disso, devemos implementar a interface **CommandLineRunner**.
+```
+@Configuration
+@Profile("test")
+public class TestConfig implements CommandLineRunner{
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public void run(String... args) throws Exception{
+        User u1 = new User(...).;
+        User u2 = new User(...);
+
+        userRepository.saveAll(Array.asList(u1, u2));
+    }
+}
+```
+
+Dentro dela irá as implementações de dados. Nesse caso, a criação de usuários.
+
+## Recomendação para criação de pacotes.
+Recomenda-se a criação dos seguintes pacotes para que haja melhor manutenção do código e organização:
+1. Config - Configuração
+2. Entities - As tabelas
+3. Repositories - Para o repositório
+4. Services - Para adicionar as services
+5. Controllers - Controles.
 
 ---
 
 ## Algumas anotations 
 ### @RestController
 Serve para identificar a classe como Bean do tipo controller. Geralmente é colocado para gerar as dependências quando necessário. É colocado na classe principal da nossa aplicação. Dentro da classe que recebe essa anotation é colocada os GetMapping. Ela irá fazer as chamadas no service que irá fazer a comunicação com o repository.
+
+Através dela ocorrerá essa comunicação. Controller -> Services -> Repositories.
 
 ### @CrossOrigin()
 Um identificador para permitir que a classe seja acessada de qualquer fonte.
@@ -81,7 +133,7 @@ public class MyAppController{
 ```
 
 ### @RequestMapping()
-RI a nível de classe. Serve para identificar por onde nós podemos acessar o recurso criado. Quando há algum método, seja ele get, post... e não houver alguma direção para ele, eles serão encaminhados para cá e dará prosseguimento ao processo.
+RI a nível de classe. Serve para identificar por onde nós podemos acessar o recurso criado. Esse será o caminho base para que os demais mappings possam ser acessados. Quando há algum método, seja ele get, post... e não houver alguma direção para ele, eles serão encaminhados para cá e dará prosseguimento ao processo.
 ```
 @RestController
 @CrossOrigin(origin = "*", maxAge = 3600)
@@ -89,15 +141,6 @@ RI a nível de classe. Serve para identificar por onde nós podemos acessar o re
 public class MyAppController{
     ...
 }
-```
-
-@RestController
-@CrossOrigin(origin = "*", maxAge = 3600)
-@RequestMapping("/direcao")
-public class MyAppController{
-    ...
-}
-```
 ```
 
 ### @GetMapping()
@@ -108,6 +151,27 @@ public String index(){
     return "Hello World";
 }
 ```
+
+Nós ainda podemos fazer um tipo de identificação para conseguir um ID de acordo com a url.
+Na classe que estará o **Service**, implementamos:
+```
+public List<User> = findById(Long id){
+    Optional<User> obj = repository.findById(id);
+    return obj.get();
+}
+```
+
+Na classe que estará o Controller:
+```
+@GetMapping("/{id}")
+
+public ResponseEntity<User> findById(@PathVariable Long id)  { //ResponseEntity pertence ao spring
+    User obj = service.findById(id);
+    reuturn ResponseEntity.ok().body(obj); // Para a requisição ser exposta no body.
+} 
+```
+
+Esse **@PathVariable** serve para fazer a comunicação no {id}. Quando nós colocarmos na url o id, ele irá reconhecer e implementar.
 
 ### PostMapping()
 Serve para identificar tal método como post. Caso seu objetivo seja ele ir para o RequestMapping, não precisamos identificar a sua direção.
