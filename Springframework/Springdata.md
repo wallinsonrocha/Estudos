@@ -7,8 +7,9 @@ Para iniciar o projeto, nós iremos no site do [spring initializr](https://start
 ## JpaRepository
 Quando vamos criar uma classe para ser considerada uma tabela, fazemos normalmente de acordo coma o mapeamento do Jpa. O SprintgData vai atuar na implementação dessas datas.
 
-1. Criemos uma interface que irá extender JpaRepository. Nele será indicado qual será a tabela que criamos (a classe que criamos para isso) e o tipo de ID.
+Criemos uma interface que irá extender JpaRepository. Nele será indicado qual será a tabela que criamos (a classe que criamos para isso) e o tipo de ID (identificador).
 ```
+@Repository // Opcional
 public interface UserRepository extends JpaRepository<User, Integer>{}
 ```
 
@@ -50,4 +51,100 @@ spring.jpa.properties.hibernate.show_sql=true
 spring.jpa.properties.hibernate.use_sql_comments=true
 ```
 
+ou
+
+```
+spring.jpa.hibernate.ddl-auto=update
+
+spring.datasource.url=jdbc:mysql://${MYSQL_HOST:localhost}:3306/db_example
+spring.datasource.username=springuser
+spring.datasource.password=ThePassword
+spring.jpa.properties.hibernate.jdbc.lab.non_contextual_creation=true
+```
+
 Além disso, devemos adicionar a **dependência maven** do nosso banco de dados. Neste caso, MySQL.
+
+---
+
+## Algumas anotations 
+### @RestController
+Serve para identificar a classe como Bean do tipo controller. Geralmente é colocado para gerar as dependências quando necessário. É colocado na classe principal da nossa aplicação. Dentro da classe que recebe essa anotation é colocada os GetMapping. Ela irá fazer as chamadas no service que irá fazer a comunicação com o repository.
+
+### @CrossOrigin()
+Um identificador para permitir que a classe seja acessada de qualquer fonte.
+```
+@RestController
+@CrossOrigin(origin = "*", maxAge = 3600)
+public class MyAppController{
+    ...
+}
+```
+
+### @RequestMapping()
+RI a nível de classe. Serve para identificar por onde nós podemos acessar o recurso criado. Quando há algum método, seja ele get, post... e não houver alguma direção para ele, eles serão encaminhados para cá e dará prosseguimento ao processo.
+```
+@RestController
+@CrossOrigin(origin = "*", maxAge = 3600)
+@RequestMapping("/direcao")
+public class MyAppController{
+    ...
+}
+```
+
+@RestController
+@CrossOrigin(origin = "*", maxAge = 3600)
+@RequestMapping("/direcao")
+public class MyAppController{
+    ...
+}
+```
+```
+
+### @GetMapping()
+Serve para identificar tal método através do direcionamento da url. Caso seu objetivo seja ele ir para o RequestMapping, não precisamos identificar a sua direção.
+```
+@GetMapping("/direcao")
+public String index(){
+    return "Hello World";
+}
+```
+
+### PostMapping()
+Serve para identificar tal método como post. Caso seu objetivo seja ele ir para o RequestMapping, não precisamos identificar a sua direção.
+Exemplo:
+```
+public ResponseEntity<Object> saveEstacionamento(@RequestBody @Valid EstacionamentoDto estacionamentoDto){
+    var estacionamentoModel = new EstacionamentoModel();
+    BeansUtils.copyProperties(estacionamentoDto, estacionamentoModel); // Conversão de ? para ?.
+    estacionamentoModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC"))); // Set da data de registro
+    return ResponseEntity.status(HttpStatus.CREATED.body(estacionamentoService.save(estacionamentoModel))); 
+    // O save e o estacionamentoService devem ser criados na classe que possui o @Service
+}
+```
+
+
+### @Service
+Identificação da classe que fará a comunicação entre o Repository e o Controller.
+
+### @Transactional
+Colocada no método que podem fazer modificações no banco de dados como o save, delete... Ele garante que, se houver algum erro, ele volta às alterações antigas.
+```
+@Service
+public class EstacionamentoService{
+    @Transactional
+    public EstacionamentoModel save(){
+        ...
+    }
+}
+```
+
+---
+
+## Anotations do Spring Validation
+Elas vão, em sua maioria, em atributos. Servem para verificá-las.
+
+### NotBlack
+Para verificar se o valor não está vazio.
+
+### Size()
+Para verificar se o campo tem mais ou menos caracteres. Para isso, identificamos com "max = numero" ou "min = numero".

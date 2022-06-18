@@ -85,10 +85,20 @@ public class Nome implements Serializable {
 }
 ```
 
+Através dele, alguns objetos serão convertidos. Isso irá ajudar a aplicação.
+
 ### @Entity
 Para indicar que a mapeação da tabela será dessa classe que criamos.
 ```
 @Entity
+public class Nome implements Serializable {...}
+```
+
+### @Table
+Caso não desejarmos que o nome da tabela seja o mesmo da classe, nós podemos nomear a maneira que ele deverá ser no @Table. Ele vem após o @Entity.
+```
+@Entity
+@Table(name = "tb_name")
 public class Nome implements Serializable {...}
 ```
 
@@ -101,12 +111,10 @@ private Integer id;
 ```
 
 ## @Colum
-Além disso, nós também podemos definir o nome que estará em alguma coluna caso quisermos alterar. Como valor padrão, ele vem o nome da propriedade que colocamos.
+Além disso, nós também podemos definir o nome que estará em alguma coluna caso quisermos alterar. Como valor padrão, ele vem o nome da propriedade que colocamos. Além disso, pode-se colocar outras propriedades:
 ```
-@Id
-@GeneratedValue(strategy= GenerationType.IDENTITY)
-@Colum(name = "id_name")
-private Integer id;
+@Colum(name = "class_name", nullable = false, unique = false, length = 20)
+private String name;
 ```
 
 ---
@@ -123,6 +131,8 @@ EntityManagers podem ser criado ou podem ser obtidos de um EntityManagerFactory.
 ```
 EntityManagerFactory emf = Persistence.createEntityManagerFactory("exemplo-jpa");
 ```
+
+## Alguns métodos
 
 ### Adicionando no Bando de Dados
 ```
@@ -168,3 +178,4 @@ System.out.println("Fim");
 em.close();
 emf.close();
 ```
+
