@@ -2,7 +2,7 @@
 Usado como implementação ao JPA trabalhando, principalmente, na percistencia de dados.
 
 ## Instalação
-Para iniciar o projeto, nós iremos no site do [spring initializr](https://start.spring.io/). Mas, dessa vez, nós iremos implementar a dependência **Spring Data JPA** e do Banco de dados. No meu caso, **MySQL Driver**.
+Para iniciar o projeto, nós iremos no site do [spring initializr](https://start.spring.io/). Mas, dessa vez, nós iremos implementar a dependência **Spring Data JPA**, **MySQL Driver**, **Spring Web**, **Validation**.
 
 ## JpaRepository
 Quando vamos criar uma classe para ser considerada uma tabela, fazemos normalmente de acordo coma o mapeamento do Jpa. O SprintgData vai atuar na implementação dessas datas.
