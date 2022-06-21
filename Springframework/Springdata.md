@@ -149,6 +149,11 @@ public class UserService {
     public List<User> findAll(){
         return repository.findAll();
     }
+    
+    public User findById(@PathVariable Long id){
+        Optional<User> obj = repository.findById(id);
+        return obj.get();
+    }
 }
 ```
 
@@ -157,10 +162,20 @@ public class UserService {
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
+    @Autowired
+    private UserService service;
 
-    public ResponseEntity<User> findAll(){
+    @GetMapping
+    public ResponseEntity<List<User>> findAll(){
         User u1 = new User(null, "Carlos", "carlos@email.com", "123456");
-        return ResponseEntity.ok().body(u1);
+        List<User> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id){
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj);
     }
 }
 ```
