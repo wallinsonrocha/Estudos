@@ -218,8 +218,7 @@ public String index(){
 }
 ```
 
-Nós ainda podemos fazer um tipo de identificação para conseguir um ID de acordo com a url.
-Na classe que estará o **Service**, implementamos:
+**Service**
 ```
 public List<User> = findById(Long id){
     Optional<User> obj = repository.findById(id);
@@ -227,7 +226,7 @@ public List<User> = findById(Long id){
 }
 ```
 
-Na classe que estará o Controller:
+**Controller**:
 ```
 @GetMapping("/{id}")
 
@@ -262,6 +261,15 @@ public ResponseEntity<User> insert(@RequiredBody User obj){
 
 ### @DeleteMapping
 Através dele podemos deletar algum usuário. No arquivo de service, onde faz a chamada do repositório, há várias chamadas como o deleteById.
+
+**Service**
+```
+public void delete(Long id){
+    repository.deleteById(id);
+}
+```
+
+**Controller**
 ```
 @DeleteMapping(value = "/{id}")
 public ResponseEntity<Void> delete(@PathVariable Long id){
