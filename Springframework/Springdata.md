@@ -173,19 +173,54 @@ public ResponseEntity<User> findById(@PathVariable Long id)  { //ResponseEntity 
 
 Esse **@PathVariable** serve para fazer a comunicação no {id}. Quando nós colocarmos na url o id, ele irá reconhecer e implementar.
 
-### PostMapping()
-Serve para identificar tal método como post. Caso seu objetivo seja ele ir para o RequestMapping, não precisamos identificar a sua direção.
-Exemplo:
+### @PostMapping
+Através do postmapping somos capazes de criar algo dentro do nosso banco de dados. Geralmente, para que isso ocorra de maneira correta, quando usamos o postman, deve-se retornar o código 201. E, para isso, devemos implementar algums métodos.
 ```
-public ResponseEntity<Object> saveEstacionamento(@RequestBody @Valid EstacionamentoDto estacionamentoDto){
-    var estacionamentoModel = new EstacionamentoModel();
-    BeansUtils.copyProperties(estacionamentoDto, estacionamentoModel); // Conversão de ? para ?.
-    estacionamentoModel.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC"))); // Set da data de registro
-    return ResponseEntity.status(HttpStatus.CREATED.body(estacionamentoService.save(estacionamentoModel))); 
-    // O save e o estacionamentoService devem ser criados na classe que possui o @Service
+@PostMapping
+public ResponseEntity<User> insert(@RequiredBody User obj){
+    obj = service.insert(obj);
+    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+        .buildAndExpand(obj.getId()).toUri();
+    return ResponseEntity.created(uri).body(obj);
 }
 ```
 
+### @DeleteMapping
+Através dele podemos deletar algum usuário. No arquivo de service, onde faz a chamada do repositório, há várias chamadas como o deleteById.
+```
+@DeleteMapping(value = "/{id}")
+public ResponseEntity<Void> delete(@PathVariable Long id){
+    service.delete(id);
+    return ResponseEntity.noContent().build();
+}
+```
+
+Caso tenha algo ligado àquele id, como no caso uma ordem de pedido, a deleção dele não será possível. Para isso, a ligação a ele deverá ser removida.
+
+### @PutMapping
+Para fazer atualizações em algum usuário.
+**Services**
+```
+public User update(Long id, User obj){
+    User entity = repository.getOne(id);
+    updateData(entity, obj);
+    return repository.save(entity);
+}
+
+private void updateData(User entity, User obj){
+    entity.setName(obj.getName());
+    ...
+}
+```
+
+**Controllers**
+```
+@PutMapping(value = "/{id}")
+public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
+    obj = service.update(id, obj);
+    return ResponseEntity.ok().body(obj);
+}
+```
 
 ### @Service
 Identificação da classe que fará a comunicação entre o Repository e o Controller.
@@ -201,6 +236,38 @@ public class EstacionamentoService{
     }
 }
 ```
+
+### @Transient
+Impede o Jpa de interpretar algum atributo. Geralmente usado para pular erros.
+
+### @ManyToOne
+Essa anotation serve para indicar a alguma propriedade que ele receberá muitas outras informações. Por isso se chama muitos para um.
+
+Supomos que fora criado uma classe para receber ordens de pedidos. Nele nós teremos as propriedades como o momento do pedido (o java pode usar o a classe Instant), o Id e o cliente. Este pode pedir várias coisas. Então, para que isso seja explicito, a anotation em cima da propriedade cliente irá ajudar.
+
+Então, para isso, iremos passa a anotation em cima dessa propriedade para que a tabela de Usuários faça um relacionamento com a tabela de ordens.
+
+Com ela, será criada a chave estrangeira. Além disso, com o **@JoinColum** podemos  essa chave estrangeira. Esta chave estrangeira faz um relacionamento entre duas tabelas. Através dela (foreign key) especificamos quais são as colunas que a tabela está relacionada.
+
+```
+public Class Order implements Serializeble{
+    ...
+    @ManyToOne
+    @JoinColum(name='client_id')
+    private User client;
+    ...
+}
+```
+
+### @OneToMany
+Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nós devemos mapear ela de acordo com o atributo que contém a anotation @ManyToOne
+```
+@OneToMany (mappedBy = 'client')
+private List<Order> orders = new ArrayList<>();
+```
+
+### @JsonIgnore
+Vem, geralmente, nas prorpiedades que possue o OnetoMany ou ManyTOne. Em uma aplicação, quando há uma propriedade chamando a outra, a chamada pode ficar infinita. É aí que o JsonIgnore entra. Onde ele estiver, a chamada dele será interrompida.
 
 ---
 
