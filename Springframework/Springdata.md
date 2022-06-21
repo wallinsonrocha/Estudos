@@ -114,6 +114,57 @@ Recomenda-se a criação dos seguintes pacotes para que haja melhor manutenção
 4. Services - Para adicionar as services
 5. Controllers - Controles.
 
+## Estrutura básica
+### Entity
+```
+@Entity
+@Table(name = "tb_value")
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
+}
+```
+
+### Repository
+```
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+}
+```
+
+### Service
+```
+@Service
+public class UserService {
+
+    @Autowired
+    private UserRepository repository;
+
+    public List<User> findAll(){
+        return repository.findAll();
+    }
+}
+```
+
+### Controller
+```
+@RestController
+@RequestMapping(value = "/users")
+public class UserController {
+
+    public ResponseEntity<User> findAll(){
+        User u1 = new User(null, "Carlos", "carlos@email.com", "123456");
+        return ResponseEntity.ok().body(u1);
+    }
+}
+```
+
 ---
 
 ## Algumas anotations 
