@@ -218,6 +218,8 @@ public String index(){
 }
 ```
 
+#### FindById
+
 **Service**
 ```
 public List<User> = findById(Long id){
@@ -234,6 +236,24 @@ public ResponseEntity<User> findById(@PathVariable Long id)  { //ResponseEntity 
     User obj = service.findById(id);
     reuturn ResponseEntity.ok().body(obj); // Para a requisição ser exposta no body.
 } 
+```
+
+#### FindAll
+
+**Service**
+```
+public List<User> findAll(){
+        return repository.findAll();
+    }
+```
+
+**Controller**:
+```
+@GetMapping
+    public ResponseEntity<List<User>> findAll(){
+        List<User> list = service.findAll();
+        return ResponseEntity.ok().body(list);
+    }
 ```
 
 Esse **@PathVariable** serve para fazer a comunicação no {id}. Quando nós colocarmos na url o id, ele irá reconhecer e implementar.
