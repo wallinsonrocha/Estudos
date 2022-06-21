@@ -241,6 +241,14 @@ Esse **@PathVariable** serve para fazer a comunicação no {id}. Quando nós col
 
 ### @PostMapping
 Através do postmapping somos capazes de criar algo dentro do nosso banco de dados. Geralmente, para que isso ocorra de maneira correta, quando usamos o postman, deve-se retornar o código 201. E, para isso, devemos implementar algums métodos.
+**Service**
+```
+public User insert(User obj){
+    reuturn repository.save(obj);
+}
+```
+
+**Controller**
 ```
 @PostMapping
 public ResponseEntity<User> insert(@RequiredBody User obj){
