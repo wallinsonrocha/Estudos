@@ -1,4 +1,4 @@
-# Seja muito bem vindo
+# Sejam bem vindos
 
 ## Apresentação
 Olá! Tudo bem? Eu me chamo Wallinson.
