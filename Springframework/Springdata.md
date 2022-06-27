@@ -364,10 +364,37 @@ public Class Order implements Serializeble{
 ```
 
 ### @OneToMany
-Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nós devemos mapear ela de acordo com o atributo que contém a anotation @ManyToOne
+Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nós devemos mapear ela de acordo com o atributo que contém a anotation @ManyToOne. Exemplo feito na classe do Cliente. Obs: O many to one e o one to many se completam.
 ```
 @OneToMany (mappedBy = 'client')
 private List<Order> orders = new ArrayList<>();
+```
+
+### @ManyToMany
+Essa anotação serve para estabelecer uma relação de muitos para muitos.
+
+Junto dela, em um elemento da relação que escolhemos, devemos por a anotatio **@JoinTable**. Nela especificaremos o nome da tabela e os parâmetros de relação com a outra tabela.
+
+```
+public class Product ...
+...
+@ManyToMany
+@JoinTable(name = "tb_product_category", 
+    joinColumns = @JoinColumn(name = "product_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"));
+private Set<Category> categories = new HashSet<>();
+```
+
+```
+public class Category ...
+...
+@ManyToMany(mappedBy = "categories");
+private Set<Product> products = new HashSet<>();
+```
+
+No curso do Nélio Alves, para adicionar elementos em alguns dos HashSets, na classe de Test (onde estava rodando a aplicação), ele fez:
+```
+p1.getCategories().add(cat2);
 ```
 
 ### @JsonIgnore
