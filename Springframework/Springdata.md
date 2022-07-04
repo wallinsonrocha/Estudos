@@ -1,15 +1,19 @@
 # Springdata
+
 Usado como implementação ao JPA trabalhando, principalmente, na percistencia de dados.
 
 ## Instalação
+
 Para iniciar o projeto, nós iremos no site do [spring initializr](https://start.spring.io/). Mas, dessa vez, nós iremos implementar a dependência **Spring Data JPA**, **MySQL Driver**, **Spring Web**, **Validation**. Caso esolha fazer testes, podemos instalar as dependências do H2.
 
 ![Mostrando as dependências](./Fotos/dependencias%20spring.png)
 
 ## JpaRepository
+
 Quando vamos criar uma classe para ser considerada uma tabela, fazemos normalmente de acordo coma o mapeamento do Jpa. O SprintgData vai atuar na implementação dessas datas.
 
 Criemos uma interface que irá extender JpaRepository. Nele será indicado qual será a tabela que criamos (a classe que criamos para isso) e o tipo de ID (identificador).
+
 ```
 @Repository // Opcional
 public interface UserRepository extends JpaRepository<User, Integer>{}
@@ -29,10 +33,13 @@ public class StartApp implements CommandLineRuner{
 }
 ```
 
-## Conectando com o MySQL ou H2.
+## Conectando com o MySQL ou H2
+
 ### MySQL
+
 Para isso, no arquivo **apllication.properties**, adicionamos esse arquivo:
 (Não esqueça de editar)
+
 ```
 # usuário e senha de conexão com o banco de dados
 spring.datasource.username=root
@@ -66,8 +73,10 @@ spring.jpa.properties.hibernate.jdbc.lab.non_contextual_creation=true
 ```
 
 ### H2
+
 Criemos um arquivo chamado **application-test.properties**.
 Nele colocaremos:
+
 ```
 spring.datasource.url=jdbc:h2:mem:testdb
 spring.datasource.username=sa
@@ -81,12 +90,14 @@ spring.jpa.properties.hibernate.format_sql=true
 ```
 
 E, dentro do arquivo **application.properties**, adicionamos:
+
 ```
 spring.profiles.active=test
 spring.jpa.open-in-view=true
 ```
 
 Após isso, recomenda-se criar uma classe para configuração. Criemos, pois, o pacote config com uma classe chamada TestConfig. Dentro dela, nós iremos identificar para o spring que ela é uma classe de configuração com a seguinte anotation: **@Configuration** e, para torná-la específica para as configurações de testes, colocaremos **@Profile("test")**, que é o mesmo nome que colocamos no profile de application.properties. Além disso, devemos implementar a interface **CommandLineRunner**.
+
 ```
 @Configuration
 @Profile("test")
@@ -106,16 +117,21 @@ public class TestConfig implements CommandLineRunner{
 
 Dentro dela irá as implementações de dados. Nesse caso, a criação de usuários.
 
-## Recomendação para criação de pacotes.
+## Recomendação para criação de pacotes
+
 Recomenda-se a criação dos seguintes pacotes para que haja melhor manutenção do código e organização:
+
 1. Config - Configuração
 2. Entities - As tabelas
 3. Repositories - Para o repositório
 4. Services - Para adicionar as services
 5. Controllers - Controles.
+6. Exceptions - Para tratar exeções.
 
 ## Estrutura básica
+
 ### Entity
+
 ```
 @Entity
 @Table(name = "tb_value")
@@ -132,6 +148,7 @@ public class User implements Serializable {
 ```
 
 ### Repository
+
 ```
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -139,6 +156,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 ```
 
 ### Service
+
 ```
 @Service
 public class UserService {
@@ -158,6 +176,7 @@ public class UserService {
 ```
 
 ### Controller
+
 ```
 @RestController
 @RequestMapping(value = "/users")
@@ -182,14 +201,18 @@ public class UserController {
 
 ---
 
-## Algumas anotations 
+## Algumas anotations
+
 ### @RestController
+
 Serve para identificar a classe como Bean do tipo controller. Geralmente é colocado para gerar as dependências quando necessário. É colocado na classe principal da nossa aplicação. Dentro da classe que recebe essa anotation é colocada os GetMapping. Ela irá fazer as chamadas no service que irá fazer a comunicação com o repository.
 
 Através dela ocorrerá essa comunicação. Controller -> Services -> Repositories.
 
 ### @CrossOrigin()
+
 Um identificador para permitir que a classe seja acessada de qualquer fonte.
+
 ```
 @RestController
 @CrossOrigin(origin = "*", maxAge = 3600)
@@ -199,7 +222,9 @@ public class MyAppController{
 ```
 
 ### @RequestMapping()
+
 RI a nível de classe. Serve para identificar por onde nós podemos acessar o recurso criado. Esse será o caminho base para que os demais mappings possam ser acessados. Quando há algum método, seja ele get, post... e não houver alguma direção para ele, eles serão encaminhados para cá e dará prosseguimento ao processo.
+
 ```
 @RestController
 @CrossOrigin(origin = "*", maxAge = 3600)
@@ -210,7 +235,9 @@ public class MyAppController{
 ```
 
 ### @GetMapping()
+
 Serve para identificar tal método através do direcionamento da url. Caso seu objetivo seja ele ir para o RequestMapping, não precisamos identificar a sua direção.
+
 ```
 @GetMapping("/direcao")
 public String index(){
@@ -221,6 +248,7 @@ public String index(){
 #### FindById
 
 **Service**
+
 ```
 public List<User> = findById(Long id){
     Optional<User> obj = repository.findById(id);
@@ -229,6 +257,7 @@ public List<User> = findById(Long id){
 ```
 
 **Controller**:
+
 ```
 @GetMapping("/{id}")
 
@@ -241,6 +270,7 @@ public ResponseEntity<User> findById(@PathVariable Long id)  { //ResponseEntity 
 #### FindAll
 
 **Service**
+
 ```
 public List<User> findAll(){
         return repository.findAll();
@@ -248,6 +278,7 @@ public List<User> findAll(){
 ```
 
 **Controller**:
+
 ```
 @GetMapping
     public ResponseEntity<List<User>> findAll(){
@@ -259,9 +290,11 @@ public List<User> findAll(){
 Esse **@PathVariable** serve para fazer a comunicação no {id}. Quando nós colocarmos na url o id, ele irá reconhecer e implementar.
 
 ### @PostMapping
+
 Através do postmapping somos capazes de criar algo dentro do nosso banco de dados. Geralmente, para que isso ocorra de maneira correta, quando usamos o postman, deve-se retornar o código 201. E, para isso, devemos implementar algums métodos.
 
 **Service**
+
 ```
 public User insert(User obj){
     reuturn repository.save(obj);
@@ -269,6 +302,7 @@ public User insert(User obj){
 ```
 
 **Controller**
+
 ```
 @PostMapping
 public ResponseEntity<User> insert(@RequestBody User obj){
@@ -280,9 +314,11 @@ public ResponseEntity<User> insert(@RequestBody User obj){
 ```
 
 ### @DeleteMapping
+
 Através dele podemos deletar algum usuário. No arquivo de service, onde faz a chamada do repositório, há várias chamadas como o deleteById.
 
 **Service**
+
 ```
 public void delete(Long id){
     repository.deleteById(id);
@@ -290,6 +326,7 @@ public void delete(Long id){
 ```
 
 **Controller**
+
 ```
 @DeleteMapping(value = "/{id}")
 public ResponseEntity<Void> delete(@PathVariable Long id){
@@ -301,9 +338,11 @@ public ResponseEntity<Void> delete(@PathVariable Long id){
 Caso tenha algo ligado àquele id, como no caso uma ordem de pedido, a deleção dele não será possível. Para isso, a ligação a ele deverá ser removida.
 
 ### @PutMapping
+
 Para fazer atualizações em algum usuário.
 
 **Services**
+
 ```
 public User update(Long id, User obj){
     User entity = repository.getOne(id);
@@ -318,6 +357,7 @@ private void updateData(User entity, User obj){
 ```
 
 **Controllers**
+
 ```
 @PutMapping(value = "/{id}")
 public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj){
@@ -327,10 +367,13 @@ public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj)
 ```
 
 ### @Service
+
 Identificação da classe que fará a comunicação entre o Repository e o Controller.
 
 ### @Transactional
+
 Colocada no método que podem fazer modificações no banco de dados como o save, delete... Ele garante que, se houver algum erro, ele volta às alterações antigas.
+
 ```
 @Service
 public class EstacionamentoService{
@@ -342,9 +385,11 @@ public class EstacionamentoService{
 ```
 
 ### @Transient
+
 Impede o Jpa de interpretar algum atributo. Geralmente usado para pular erros.
 
 ### @ManyToOne
+
 Essa anotation serve para indicar a alguma propriedade que ele receberá muitas outras informações. Por isso se chama muitos para um.
 
 Supomos que fora criado uma classe para receber ordens de pedidos. Nele nós teremos as propriedades como o momento do pedido (o java pode usar o a classe Instant), o Id e o cliente. Este pode pedir várias coisas. Então, para que isso seja explicito, a anotation em cima da propriedade cliente irá ajudar.
@@ -364,13 +409,16 @@ public Class Order implements Serializeble{
 ```
 
 ### @OneToMany
+
 Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nós devemos mapear ela de acordo com o atributo que contém a anotation @ManyToOne. Exemplo feito na classe do Cliente. Obs: O many to one e o one to many se completam.
+
 ```
 @OneToMany (mappedBy = 'client')
 private List<Order> orders = new ArrayList<>();
 ```
 
 ### @ManyToMany
+
 Essa anotação serve para estabelecer uma relação de muitos para muitos.
 
 Junto dela, em um elemento da relação que escolhemos, devemos por a anotatio **@JoinTable**. Nela especificaremos o nome da tabela e os parâmetros de relação com a outra tabela.
@@ -393,20 +441,179 @@ private Set<Product> products = new HashSet<>();
 ```
 
 No curso do Nélio Alves, para adicionar elementos em alguns dos HashSets, na classe de Test (onde estava rodando a aplicação), ele fez:
+
 ```
 p1.getCategories().add(cat2);
 ```
 
 ### @JsonIgnore
+
 Vem, geralmente, nas prorpiedades que possue o OnetoMany ou ManyTOne. Em uma aplicação, quando há uma propriedade chamando a outra, a chamada pode ficar infinita. É aí que o JsonIgnore entra. Onde ele estiver, a chamada dele será interrompida.
 
 ---
 
-## Anotations do Spring Validation
-Elas vão, em sua maioria, em atributos. Servem para verificá-las.
+## Tratamento de exceções
 
-### NotBlack
-Para verificar se o valor não está vazio.
+Ao criar as funções do CRUD, em alguns momentos poderá haver um erro ao requisitar um get, push ou qualquer outra coisa da nossa API. Por conta disso, precisamos fazer um tratamento para isso.
 
-### Size()
-Para verificar se o campo tem mais ou menos caracteres. Para isso, identificamos com "max = numero" ou "min = numero".
+### Início
+
+Para iniciar, devemos, dentro da pasta Exception, criar alguns arquivos e uma pasta. Os arquivos são:
+1. DatabaseException - que irá extender Runtime Exception.
+2. NotFoundException - que também irá extender de Runtime Exception.
+3. Resoucer - que terá alguns recursos que usaremos;
+4. ResoucerExceptionHandler - que estará dentro da pasta Resoucer.
+5. StandardError - que também estará dentro da pasta Resoucer.
+
+## Configuração de cada arquivo:
+
+### DatabaseException
+```
+public class DatabaseException extends RuntimeException{
+    private static final long serialVersionUID = 1L;
+
+    public DatabaseException(String msg){
+        super(msg);
+    }
+}
+```
+
+### NotFoundException
+```
+public class NotFoundException extends RuntimeException{
+    private static final long serialVersionUID = 1L;
+
+    public NotFoundException(Object id){
+        super("Not found resoucer. Id" + id);
+    }
+}
+```
+
+### StandardError
+```
+public class StandardError implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private Instant timestamp;
+    private Integer status;
+    private String error;
+    private String message;
+    private String path;
+
+    public StandardError() {
+    }
+
+    public StandardError(Instant timestamp, Integer status, String error, String message, String path) {
+        this.timestamp = timestamp;
+        this.status = status;
+        this.error = error;
+        this.message = message;
+        this.path = path;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+}
+```
+
+### ResoucerExceptionHandler
+```
+@ControllerAdvice
+public class ResoucerExceptionHandler {
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request){
+        String error = "Resoucer not found";
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<StandardError> database(DatabaseException e, HttpServletRequest request){
+        String error = "Database error";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+}
+```
+
+Essa classe irá fazer as comunicações entre as mensagens de erro e a sua manipulação com o StandardError.
+
+## Correções nos Services
+
+Após isso, iremos fazer várias correções das chamadas ao repositório. Dentre elas estão:
+
+### delete
+```
+public void delete(Long id){
+        try{
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new NotFoundException(id);
+        } catch (DataIntegrityViolationException e){
+            throw new DatabaseException(e.getMessage());
+        }
+    }
+```
+
+### update
+```
+public Class update(Long id, Products obj){
+        try{
+            Class entity = repository.getReferenceById(id);
+            updateData(entity, obj);
+            return repository.save(entity);
+        } catch (EntityNotFoundException e){
+            throw new NotFoundException(id);
+        }
+    }
+```
+
+### findById
+```
+public Class findById(Long id){
+    Optional<Class> obj = repository.findById(id);
+    return obj.orElseThrow(()-> new NotFoundException(id));
+    }
+```
+
+Neste último, observe que o obj pode retornar, além do get, outras funções.
