@@ -10,6 +10,11 @@ sudo mysql
 
 Esse comando será usado quando você tiver usando o MySQL pela primeira vez.
 
+Já nas demais vexes, entraremos colocando o nosso usuário e depois a senha:
+```
+mysql -u <user> -p
+```
+
 ## Criando usuário e senha.
 Logo após, você irá precisar criar um usuário e senha para acessar o seu MySQL. Para isso você irá colocar e editar no terminal o seguinte cógigo:
 ```
