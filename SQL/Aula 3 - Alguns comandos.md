@@ -56,6 +56,13 @@ DELETE FROM pessoas WHERE id=1;
 ```
 É extremamente importante ressaltar que, uma vez apagada, estará apagada para sempre. Não existe lixeira. Por isso, sempre lembre-se de por WHERE.
 
+## Deletando banco de dados
+
+```
+DROP DATABASE <nome>;
+```
+Com esse comando o banco será apagado.
+
 ## Ordenando os dados
 ```
 SELECT * FROM pessoa ORDER BY nome;
