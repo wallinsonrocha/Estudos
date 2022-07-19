@@ -1,6 +1,45 @@
 # Springdata
 
-Usado como implementação ao JPA trabalhando, principalmente, na percistencia de dados.
+1. [Instalação](#instalacao)
+2. [JpaRepository](#jparepository)
+3. [Conectando com Banco de dados](#conectando-com-banco-de-dados)
+    1. [MySQL](#mysql)
+    2. [H2](#h2)
+4. [Recomendação para criação de pacotes](#recomendação-para-criação-de-pacotes)
+5. [Estrutura básica](#estrutura-básica)
+    1. [Entity](#entity)
+    2. [Repository](#repository)
+    3. [Service](#service)
+    4. [Controller](#controller)
+6. [Algumas anotations](#algumas-anotations)
+    1. [@RestController](#restcontroller)
+    2. [@CrossOrigin()](#crossorigin)
+    3. [@RequestMapping()](#requestmapping)
+    4. [@GetMapping()](#getmapping)
+        1. [FindById](#findbyid)
+        2. [FindAll](#findall)
+    5. [@PostMapping](#postmapping)
+    6. [@DeleteMapping](#deletemapping)
+    7. [@PutMapping](#putmapping)
+    8. [@Service](#anotacao-service)
+    9. [@Transactional](#transactional)
+    10. [@Transient](#transient)
+    11. [@ManyToOne](#manytomany)
+    12. [@JsonIgnore](#jsonignore)
+7. [Tratamento de exceções](#tratamento-de-excecoes)
+    1. [Início](#início)
+8. [Configuração de cada arquivo](#configuração-de-cada-arquivo)
+    1. [DatabaseException](#databaseexception)
+    2. [NotFoundException](#notfoundexception)
+    3. [StandardError](#standarderror)
+    4. [ResoucerExceptionHandler](#resoucerexceptionhandler)
+9. [Correções nos Services](#correcoes-nos-services)
+    1. [delete](#delete)
+    2. [update](#update)
+    3. [findById](#correcoes-findbyid)
+10. 
+
+<a id=#instalacao></a>
 
 ## Instalação
 
@@ -33,7 +72,7 @@ public class StartApp implements CommandLineRuner{
 }
 ```
 
-## Conectando com o MySQL ou H2
+## Conectando com Banco de dados
 
 ### MySQL
 
@@ -125,7 +164,7 @@ Recomenda-se a criação dos seguintes pacotes para que haja melhor manutenção
 2. Entities - As tabelas
 3. Repositories - Para o repositório
 4. Services - Para adicionar as services
-5. Controllers - Controles.
+5. Controllers ou Resources - Controles.
 6. Exceptions - Para tratar exeções.
 
 ## Estrutura básica
@@ -555,10 +594,11 @@ public class StandardError implements Serializable {
 }
 ```
 
-### ResoucerExceptionHandler
+### ResourceExceptionHandler
 ```
+// Isso indica que essa classe irá tratar erros especiais.
 @ControllerAdvice
-public class ResoucerExceptionHandler {
+public class ResourceExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request){
@@ -619,3 +659,79 @@ public Class findById(Long id){
 ```
 
 Neste último, observe que o obj pode retornar, além do get, outras funções.
+
+---
+
+## Bando de dados NoSQL
+
+## Conectando o mongodb
+
+Utilizando o STS (que foi a versão que achei melhor para fazer isso), em **application.properties**, nós iremos adicionar a seguinte linha:
+```
+spring.data.mongodb.uri=mongodb://localhost:27017/udemy
+```
+
+Além disso, nós devemos importar as dependencias maven no mongodb stater:
+```
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+</dependency>
+```
+
+Nela irá o endereço, a porta e o nome da coleção.
+
+Após isso, devemos iniciar o mongo com o seguinte comando no terminal:
+```
+mongod
+```
+
+Obs.: Não poderemos de esquecer de criar a coleção que será usada. Podemos usar o MongoDB Compass para criá-la.
+
+## Criação
+
+A criação dos arquivos segue o mesmo exemplo de como seria criar em um bando SQL. Há algumas diferenças. Entre elas estão a mudança de nome. O que nós conhecemos como **@Entity**, no NoSQL será **@Document**.
+
+Além disso, no Repository, ao invés do **JpaRepository**, nós iremos usar o **MongoRepository**. Da mesma forma, o tipo de id será uma String.
+
+## Interações com o banco de dados
+
+### Obtendo um usuário por id
+
+Para fins de tratamento de exceção, devemos criar uma classe ObjectNotFoundException no subpacote (o qual criaremos) **service.exception**.
+
+Esse será o código que haverá dentro da classe:
+
+```
+public class ObjectNotFoundException extends RuntimeException {
+
+	private static final long serialVersionUID = 1L;
+	
+	public ObjectNotFoundException(String msg) {
+		super(msg);
+	}	
+}
+```
+
+Além disso, podemos seguir os passor que tem no [Tratamento de exceções](#tratamento-de-excecoes) no subpacote **resources.exception**. Nós iremos criar o StandardError e o ResourceExceptionHandler.
+
+
+**Service**
+
+Iremos adicionar o método findById.
+
+```
+public User findById(String id){
+    Optional<User> obj = repository.findById(id);
+	return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+}
+```
+
+**Resource ou Controller**
+```
+@GetMapping("/{id}")
+public ResponseEntity<UserDTO> findById(@PathVariable String id){
+    User obj = service.findById(id);
+    return ResponseEntity.ok().body(new UserDTO(obj));
+}
+```

@@ -1,5 +1,5 @@
-# Estudos React
-Através desse repositório, decidi compartilhar os meus estudos com a biblioteca do Javascript chamada React JS.
+# Anotações React
+Através desse repositório, decidi compartilhar as minhas anotações da biblioteca do Javascript chamada React JS.
 
 Creio que, assim como eu, muitos tiveram ou ainda têm dificuldades em compreender alguns assuntos por falta de exemplos ou de mais aprofundamento.
 
