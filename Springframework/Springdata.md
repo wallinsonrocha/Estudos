@@ -21,25 +21,28 @@
     5. [@PostMapping](#postmapping)
     6. [@DeleteMapping](#deletemapping)
     7. [@PutMapping](#putmapping)
-    8. [@Service](#anotacao-service)
+    8. [@Service (anotação)](#service-anotação)
     9. [@Transactional](#transactional)
     10. [@Transient](#transient)
     11. [@ManyToOne](#manytomany)
     12. [@JsonIgnore](#jsonignore)
-7. [Tratamento de exceções](#tratamento-de-excecoes)
+7. [Tratamento de exceções](#tratamento-de-exceções)
     1. [Início](#início)
 8. [Configuração de cada arquivo](#configuração-de-cada-arquivo)
     1. [DatabaseException](#databaseexception)
     2. [NotFoundException](#notfoundexception)
     3. [StandardError](#standarderror)
     4. [ResoucerExceptionHandler](#resoucerexceptionhandler)
-9. [Correções nos Services](#correcoes-nos-services)
+9. [Correções nos Services](#correções-nos-services)
     1. [delete](#delete)
     2. [update](#update)
-    3. [findById](#correcoes-findbyid)
-10. 
+    3. [findById](#findbyid-correções)
+10. [Banco de dados NoSQL](#banco-de-dados-nosql)
+    1. [Conectando o mongodb](#conectando-o-mongodb)
+    2. [Criação](#criação)
+    3. [Interações com o banco de dados](#interações-com-o-banco-de-dados)
+        1. [Obtendo um usuário por id](#obtendo-um-usuário-por-id)
 
-<a id=#instalacao></a>
 
 ## Instalação
 
@@ -405,7 +408,7 @@ public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj)
 }
 ```
 
-### @Service
+### @Service (anotação)
 
 Identificação da classe que fará a comunicação entre o Repository e o Controller.
 
@@ -594,7 +597,7 @@ public class StandardError implements Serializable {
 }
 ```
 
-### ResourceExceptionHandler
+### ResoucerExceptionHandler
 ```
 // Isso indica que essa classe irá tratar erros especiais.
 @ControllerAdvice
@@ -650,7 +653,7 @@ public Class update(Long id, Products obj){
     }
 ```
 
-### findById
+### findById (correções)
 ```
 public Class findById(Long id){
     Optional<Class> obj = repository.findById(id);
@@ -662,7 +665,7 @@ Neste último, observe que o obj pode retornar, além do get, outras funções.
 
 ---
 
-## Bando de dados NoSQL
+# Banco de dados NoSQL
 
 ## Conectando o mongodb
 
