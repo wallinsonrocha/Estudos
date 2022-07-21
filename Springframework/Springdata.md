@@ -1,47 +1,49 @@
 # Springdata
 
-1. [Instalação](#instalacao)
-2. [JpaRepository](#jparepository)
-3. [Conectando com Banco de dados](#conectando-com-banco-de-dados)
-    1. [MySQL](#mysql)
-    2. [H2](#h2)
-4. [Recomendação para criação de pacotes](#recomendação-para-criação-de-pacotes)
-5. [Estrutura básica](#estrutura-básica)
-    1. [Entity](#entity)
-    2. [Repository](#repository)
-    3. [Service](#service)
-    4. [Controller](#controller)
-6. [Algumas anotations](#algumas-anotations)
-    1. [@RestController](#restcontroller)
-    2. [@CrossOrigin()](#crossorigin)
-    3. [@RequestMapping()](#requestmapping)
-    4. [@GetMapping()](#getmapping)
-        1. [FindById](#findbyid)
-        2. [FindAll](#findall)
-    5. [@PostMapping](#postmapping)
-    6. [@DeleteMapping](#deletemapping)
-    7. [@PutMapping](#putmapping)
-    8. [@Service (anotação)](#service-anotação)
-    9. [@Transactional](#transactional)
-    10. [@Transient](#transient)
-    11. [@ManyToOne](#manytomany)
-    12. [@JsonIgnore](#jsonignore)
-7. [Tratamento de exceções](#tratamento-de-exceções)
-    1. [Início](#início)
-8. [Configuração de cada arquivo](#configuração-de-cada-arquivo)
-    1. [DatabaseException](#databaseexception)
-    2. [NotFoundException](#notfoundexception)
-    3. [StandardError](#standarderror)
-    4. [ResoucerExceptionHandler](#resoucerexceptionhandler)
-9. [Correções nos Services](#correções-nos-services)
-    1. [delete](#delete)
-    2. [update](#update)
-    3. [findById](#findbyid-correções)
-10. [Banco de dados NoSQL](#banco-de-dados-nosql)
-    1. [Conectando o mongodb](#conectando-o-mongodb)
-    2. [Criação](#criação)
-    3. [Interações com o banco de dados](#interações-com-o-banco-de-dados)
-        1. [Obtendo um usuário por id](#obtendo-um-usuário-por-id)
+- [Instalação](#instalação)
+- [JpaRepository](#jparepository)
+- [Conectando com Banco de dados](#conectando-com-banco-de-dados)
+    - [MySQL](#mysql)
+    - [H2](#h2)
+- [Recomendação para criação de pacotes](#recomendação-para-criação-de-pacotes)
+- [Estrutura básica](#estrutura-básica)
+    - [Entity](#entity)
+    - [Repository](#repository)
+    - [Service](#service)
+    - [Controller](#controller)
+- [Algumas anotations](#algumas-anotations)
+    - [@RestController](#restcontroller)
+    - [@CrossOrigin()](#crossorigin)
+    - [@RequestMapping()](#requestmapping)
+    - [@GetMapping()](#getmapping)
+        - [FindById](#findbyid)
+        - [FindAll](#findall)
+    - [@PostMapping](#postmapping)
+    - [@DeleteMapping](#deletemapping)
+    - [@PutMapping](#putmapping)
+    - [@Service (anotação)](#service-anotação)
+    - [@Transactional](#transactional)
+    - [@Transient](#transient)
+    - [@ManyToOne](#manytomany)
+    - [@JsonIgnore](#jsonignore)
+    - [@Column](#column)
+    - [@Table](#table)
+- [Tratamento de exceções](#tratamento-de-exceções)
+    - [Início](#início)
+- [Configuração de cada arquivo](#configuração-de-cada-arquivo)
+    - [DatabaseException](#databaseexception)
+    - [NotFoundException](#notfoundexception)
+    - [StandardError](#standarderror)
+    - [ResoucerExceptionHandler](#resoucerexceptionhandler)
+- [Correções nos Services](#correções-nos-services)
+    - [delete](#delete)
+    - [update](#update)
+    - [findById](#findbyid-correções)
+- [Banco de dados NoSQL](#banco-de-dados-nosql)
+    - [Conectando o mongodb](#conectando-o-mongodb)
+    - [Criação](#criação)
+    - [Interações com o banco de dados](#interações-com-o-banco-de-dados)
+        - [Obtendo um usuário por id](#obtendo-um-usuário-por-id)
 
 
 ## Instalação
@@ -169,6 +171,8 @@ Recomenda-se a criação dos seguintes pacotes para que haja melhor manutenção
 4. Services - Para adicionar as services
 5. Controllers ou Resources - Controles.
 6. Exceptions - Para tratar exeções.
+
+Caso seja NoSQL, no lugar de Entities, colocamos "Domain".
 
 ## Estrutura básica
 
@@ -495,6 +499,27 @@ p1.getCategories().add(cat2);
 Vem, geralmente, nas prorpiedades que possue o OnetoMany ou ManyTOne. Em uma aplicação, quando há uma propriedade chamando a outra, a chamada pode ficar infinita. É aí que o JsonIgnore entra. Onde ele estiver, a chamada dele será interrompida.
 
 ---
+
+### @Column
+
+O column é colocado nos demais atributos de alguma entidade. Através dela nós podemos definir o nome que irá aparecer no banco de dados, podemos definir se ela irá ser ou não nula, além disso, podemos definir que tipo de valor ela irá receber.
+
+```
+@Column(name = "first_name", nullable = "false", columnDefinition = "TEXT")
+private String firstName;
+```
+
+Normalmente a arquitetura do Java já diz se ele será nulo e que tipo de variável ele poderá receber.
+
+### @Table
+
+Utilizado, geralmente, para mudar o nome da entidade a fim de que ela não seja o mesmo da Classe Java.
+```
+@Table(name = "studentData")
+public class Student{
+    ...
+}
+```
 
 ## Tratamento de exceções
 
