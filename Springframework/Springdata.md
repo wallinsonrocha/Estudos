@@ -30,15 +30,16 @@
     - [@Table](#table)
 - [Tratamento de exceções](#tratamento-de-exceções)
     - [Início](#início)
-- [Configuração de cada arquivo](#configuração-de-cada-arquivo)
-    - [DatabaseException](#databaseexception)
-    - [NotFoundException](#notfoundexception)
-    - [StandardError](#standarderror)
-    - [ResoucerExceptionHandler](#resoucerexceptionhandler)
-- [Correções nos Services](#correções-nos-services)
-    - [delete](#delete)
-    - [update](#update)
-    - [findById](#findbyid-correções)
+    - [Configuração de cada arquivo](#configuração-de-cada-arquivo)
+        - [DatabaseException](#databaseexception)
+        - [NotFoundException](#notfoundexception)
+        - [StandardError](#standarderror)
+        - [ResoucerExceptionHandler](#resoucerexceptionhandler)
+    - [Correções nos Services](#correções-nos-services)
+        - [delete](#delete)
+        - [update](#update)
+        - [findById](#findbyid-correções)
+- [Paginação](#paginação)
 - [Banco de dados NoSQL](#banco-de-dados-nosql)
     - [Conectando o mongodb](#conectando-o-mongodb)
     - [Criação](#criação)
@@ -690,9 +691,64 @@ Neste último, observe que o obj pode retornar, além do get, outras funções.
 
 ---
 
-# Banco de dados NoSQL
+## Paginação
 
-## Conectando o mongodb
+Para que a paginação ocorra de forma correta, devemos fazer algumas modificações no nosso código. Uma delas será o retorno no nosso FindAll. Ao invés de retornamos uma list, iremos retorna uma Page. Além disso, nós iremos por o seguinte código na nossa requisição. Mas, antes de colocar, vejamos os seus parâmetros:
+
+```
+@RequestParam(value = "page", defaultValue = "0") Integer page,
+// por padrão, o valor default é 0. É por onde iremos começar, se é a página 0 ou outra.
+@RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+// Aqui é o valor de linhas por página.
+@RequestParam(value = "direction", defaultValue = "DESC") String direction,
+// Direção: Asc ou Desc.
+@RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+// Nome do atributo que nós vamos ordenar os registros. No exemplo dos usuários, retornaremos os nomes.
+```
+
+Eles ficarão dentro dos parênteses do findAll. Além disso, iremos implementa mais coisas no corpo do nosso método.
+```
+public ResponseEntity<Page<User>> findAll(
+    @RequestParam(value = "page", defaultValue = "0") Integer page,
+    @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
+    @RequestParam(value = "direction", defaultValue = "DESC") String direction,
+    @RequestParam(value = "orderBy", defaultValue = "name") String orderBy
+){
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+        // Os valores precisam ser, necesessariamente nessa ordem.
+
+        Page<User> list = service.findAllPaged(pageRequest);
+
+        return ResponseEntity.ok().body(list);
+    }
+```
+
+**Service**
+
+```
+@Transactional
+public Page<UserDTO> findAllPaged(PageRequest pageRequest){
+    Page<User> list = repository.findAll(pageRequest);
+	return list.map(x -> new UserDTO(x));
+}
+```
+
+Ao fazer a requisição no Postman, nós podemos fazer a requisição de outras páginas da seguinte forma:
+```
+http://localhost/users?page=1
+```
+
+Esse "?" serme para colocar parâmetros opcionais. Além disso, podemos trocar os outros parâmetros.
+```
+http://localhost/users?page=1&linesPerPage=5&direction=ASC&orderBy=name
+```
+
+---
+
+## Banco de dados NoSQL
+
+### Conectando o mongodb
 
 Utilizando o STS (que foi a versão que achei melhor para fazer isso), em **application.properties**, nós iremos adicionar a seguinte linha:
 ```
@@ -716,15 +772,15 @@ mongod
 
 Obs.: Não poderemos de esquecer de criar a coleção que será usada. Podemos usar o MongoDB Compass para criá-la.
 
-## Criação
+### Criação
 
 A criação dos arquivos segue o mesmo exemplo de como seria criar em um bando SQL. Há algumas diferenças. Entre elas estão a mudança de nome. O que nós conhecemos como **@Entity**, no NoSQL será **@Document**.
 
 Além disso, no Repository, ao invés do **JpaRepository**, nós iremos usar o **MongoRepository**. Da mesma forma, o tipo de id será uma String.
 
-## Interações com o banco de dados
+### Interações com o banco de dados
 
-### Obtendo um usuário por id
+#### Obtendo um usuário por id
 
 Para fins de tratamento de exceção, devemos criar uma classe ObjectNotFoundException no subpacote (o qual criaremos) **service.exception**.
 
