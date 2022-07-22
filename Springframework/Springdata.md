@@ -344,7 +344,35 @@ Através do postmapping somos capazes de criar algo dentro do nosso banco de dad
 
 ```
 public User insert(User obj){
-    reuturn repository.save(obj);
+    return repository.save(obj);
+}
+```
+
+Há uma outra forma de criar o service através de uma classe DTO.
+
+```
+public UserDTO insert(UserDTO dto){
+    User entity = new User();
+    
+    CopyDtoToEntity(dto, entity);
+
+    entity = respository.save(entity);
+    return new UserDTO(entity);
+}
+
+...
+
+private CopyDtoToEntity(UserDTO dto, User entity){
+    entity.setName(dto.getName());
+    entity.setDescription(dto.getDescription());
+    ...
+
+    // Considerando que as categorias no UserDTO foram configuradas
+    entity.getCategories().clear();
+    for(CategoryDTO catDTO : dto.getCategory()){
+        Category category = categoryRepository.getOne(catDTO.getId);
+        entity.getCategories().add(category);
+    }
 }
 ```
 
@@ -400,6 +428,38 @@ public User update(Long id, User obj){
 private void updateData(User entity, User obj){
     entity.setName(obj.getName());
     ...
+}
+```
+
+Há uma outra forma de criar o service através de uma classe DTO.
+
+```
+public UserDTO update(Long id, UserDTO dto){
+    try{
+        User entity = new User();
+        
+        CopyDtoToEntity(dto, entity);
+
+        entity = respository.save(entity);
+        return new UserDTO(entity);
+    } catch(EntityNotFoundException e) {
+        throw new ResourceNotFoundException("Id not found " + id);
+    }
+}
+
+...
+
+private CopyDtoToEntity(UserDTO dto, User entity){
+    entity.setName(dto.getName());
+    entity.setDescription(dto.getDescription());
+    ...
+
+    // Considerando que as categorias no UserDTO foram configuradas
+    entity.getCategories().clear();
+    for(CategoryDTO catDTO : dto.getCategory()){
+        Category category = categoryRepository.getOne(catDTO.getId);
+        entity.getCategories().add(category);
+    }
 }
 ```
 
@@ -510,7 +570,18 @@ O column é colocado nos demais atributos de alguma entidade. Através dela nós
 private String firstName;
 ```
 
-Normalmente a arquitetura do Java já diz se ele será nulo e que tipo de variável ele poderá receber.
+Normalmente a arquitetura do Java já diz se ele será nulo e que tipo de variável ele poderá receber. Mas, há algumas recomendações específica para o trabalho com datas, especialmente com o instante para que possamos trabalhar com o formato ISO 8601. O formato que irá ser apresentado instrui o banco de dados a guardar o atributo no formato UTC.
+
+```
+@Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+private Instante date;
+```
+
+Além dela, outra forma de trabalhar é com os textos. Nós definimos o tipo de coluna para "text" para que sejam aceitos mais do que 255 caracteres. Geralmente é utilizado para descrições.
+```
+@Column(columnDefinition = "TEXT")
+private String description;
+```
 
 ### @Table
 
