@@ -43,7 +43,7 @@ Após a execução no git init, iremos criar um repositório remoto em nosso pc.
 Lembra daquele link ssh (não é a chave, ok?) que criamos na aula 2 ao criar o repositório no github? Nós iremos copiar ela para executar esse comando.
 
 ```
-git remote origin add <link ssh>
+git remote add origin <link ssh>
 ```
 
 Caso quisermos deletar ela, podemos usar
