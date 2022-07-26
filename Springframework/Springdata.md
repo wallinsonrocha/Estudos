@@ -297,7 +297,7 @@ public String index(){
 **Service**
 
 ```
-public List<User> = findById(Long id){
+public User findById(Long id){
     Optional<User> obj = repository.findById(id);
     return obj.get();
 }
