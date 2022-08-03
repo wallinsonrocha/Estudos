@@ -24,7 +24,9 @@
     - [@Service (anotação)](#service-anotação)
     - [@Transactional](#transactional)
     - [@Transient](#transient)
-    - [@ManyToOne](#manytomany)
+    - [@ManyToOne](#manytoone)
+    - [@OneToMany](#onetomany)
+    - [@ManyToMany](#manytomany)
     - [@JsonIgnore](#jsonignore)
     - [@Column](#column)
     - [@Table](#table)
@@ -542,6 +544,18 @@ public class Product ...
 private Set<Category> categories = new HashSet<>();
 ```
 
+Em alguns momentos nós poderemos desejar que a classe Product, ao ser carregada, leve consigo a classe category, a qual fará essa ligação ManyToMany. Então, para isso, devemos instanciar o FetchType EAGER. Para que o efeito seja o contrário, utilizamos o LAZY ao invés do EAGER.
+
+```
+public class Product ...
+...
+@ManyToMany(fecth = FetchType.EAGER)
+@JoinTable(name = "tb_product_category", 
+    joinColumns = @JoinColumn(name = "product_id"),
+    inverseJoinColumns = @JoinColumn(name = "category_id"));
+private Set<Category> categories = new HashSet<>();
+```
+
 ```
 public class Category ...
 ...
@@ -572,6 +586,8 @@ private String firstName;
 
 Normalmente a arquitetura do Java já diz se ele será nulo e que tipo de variável ele poderá receber. Mas, há algumas recomendações específica para o trabalho com datas, especialmente com o instante para que possamos trabalhar com o formato ISO 8601. O formato que irá ser apresentado instrui o banco de dados a guardar o atributo no formato UTC.
 
+Caso queiramos que os valores vão com o Timezone local, **substituímos** o without por with.
+
 ```
 @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
 private Instante date;
@@ -581,6 +597,12 @@ Além dela, outra forma de trabalhar é com os textos. Nós definimos o tipo de 
 ```
 @Column(columnDefinition = "TEXT")
 private String description;
+```
+
+Temos também a propriedade Unique que faz um certo atributo ser único.
+```
+@Column(unique = true)
+private String email;
 ```
 
 ### @Table
@@ -813,6 +835,38 @@ http://localhost/users?page=1
 Esse "?" serme para colocar parâmetros opcionais. Além disso, podemos trocar os outros parâmetros.
 ```
 http://localhost/users?page=1&linesPerPage=5&direction=ASC&orderBy=name
+```
+
+Há uma outra forma muito mais prática para fazer a paginação para a nossa API. Para isso, nós usaremos o a classe Pageable. Ela pertence ao **springframework.data.domain**.
+
+```
+public ResponseEntity<Page<User>> findAll(Pageable pageable){
+        PageRequest pageRequest = PageRequest.of(pageable);
+        Page<User> list = service.findAllPaged(pageRequest);
+        return ResponseEntity.ok().body(list);
+    }
+```
+
+**Service**
+
+```
+@Transactional(readOnly = true)
+public Page<UserDTO> findAllPaged(Pageable pageable){
+    Page<User> list = repository.findAll(pageable);
+	return list.map(x -> new UserDTO(x));
+}
+```
+
+Para usar a requisição, os parâmetros serão um pouco diferentes:
+
+```
+http://localhost/users?page=1&size=5&sort=name
+```
+
+No final do name, em sort, podemos definir a direção com asc ou desc para queiramos. Basta por uma vírgulo após o name.
+
+```
+...sort=name,asc
 ```
 
 ---
