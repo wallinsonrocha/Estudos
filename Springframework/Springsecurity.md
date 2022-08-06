@@ -668,14 +668,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 Quando vamos fazer o acesso, o endpoint será "/oauth/token". Além disso, no postman, iremos colocar o método post, pois faremos um loggin. Ao invés de fazermos pela aba do "Params", iremos na aba "Authorization". E o tipo de autorização que escolheremos é o basic.
 
-![Direcionamento segundo a instrução acima]("../../Fotos/Captura%20de%20tela%202022-08-06%20101622.png")
+![Direcionamento segundo a instrução acima](./Fotos/Captura%20de%20tela%202022-08-06%20101622.png)
 
 Logo após isso, iremos colocar o Usuário e a senha de acordo com o que colocamos no nosso banco. No caso do código acima foram "usuario" e "senha123".
 
 Após isso, precisaremos colocar as credenciais do usuário. Iremos na aba Body e escolheremos o formato x-www-form-urlencoded.
 
-![Direcionamento segundo a instrução acima]("../../Fotos/credenciais%20do%20usuario.png")
+![Direcionamento segundo a instrução acima](./Fotos/credenciais%20do%20usuario.png)
 
 Logo após, iremos colocar as chaves e os valores para as credenciais. O usuário e a senha devem estar registradas no banco de dados.
 
-![Direcionamento segundo a instrução acima]("../../Fotos/chaves%20e%20valores.png")
+![Direcionamento segundo a instrução acima](./Fotos/chaves%20e%20valores.png)
