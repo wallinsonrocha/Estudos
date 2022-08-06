@@ -564,3 +564,90 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 }
 ```
+
+---
+
+# Autorização e autenticação - OAuth2
+
+## Beans para Token JWT
+
+Pode ser colocado no AppConfig. Eles serão capazes de acessar o token.
+
+```
+@Bean
+public JwtAccessTokenConverter accessTokenConverter() {
+	JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
+	tokenConverter.setSigningKey("MY-JWT-SECRET");
+	return tokenConverter;
+}
+
+@Bean
+public JwtTokenStore tokenStore() {
+	return new JwtTokenStore(accessTokenConverter());
+}
+```
+
+## Classe
+
+Nós iremos criar ela no pacote de configuração.
+
+```
+@Configuration
+@EnableAuthorizationServer
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtAccessTokenConverter accessTokenConverter;
+
+    @Autowired
+    private JwtTokenStore tokenStore;
+
+    // O bean criado no SecurityConfig
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    // Sobscreveremos os 3 métodos Override configure
+    @Override
+    protected void configure(AuthorizationServerSecurityConfigurer security) throws Exception{
+        security.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+    }
+
+    @Override
+    protected void configure(ClientDetailsServiceConfigurer clients) throws Exception{
+        clients.inMemory()
+        .withClient("usuario")
+        .secret(passwordEncoder.encode("senha123"))
+        .scopes("read", "write")
+        .authorizedGrantTypes("password")
+        .accessTokenValiditySeconds(86400);
+    }
+
+    @Override
+    protected void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception{
+        endpoints.authenticationManager(authenticationManager)
+        .tokenStore(tokenStore)
+        .accessTokenConverter(accessTokenConverter);
+    }
+}
+```
+
+---
+
+# Autorização e autenticação - Acesso na url
+
+Quando vamos fazer o acesso, o endpoint será "/oauth/token". Além disso, no postman, iremos colocar o método post, pois faremos um loggin. Ao invés de fazermos pela aba do "Params", iremos na aba "Authorization". E o tipo de autorização que escolheremos é o basic.
+
+![Direcionamento segundo a instrução acima]("../../Fotos/Captura%20de%20tela%202022-08-06%20101622.png")
+
+Logo após isso, iremos colocar o Usuário e a senha de acordo com o que colocamos no nosso banco. No caso do código acima foram "usuario" e "senha123".
+
+Após isso, precisaremos colocar as credenciais do usuário. Iremos na aba Body e escolheremos o formato x-www-form-urlencoded.
+
+![Direcionamento segundo a instrução acima]("../../Fotos/credenciais%20do%20usuario.png")
+
+Logo após, iremos colocar as chaves e os valores para as credenciais. O usuário e a senha devem estar registradas no banco de dados.
+
+![Direcionamento segundo a instrução acima]("../../Fotos/chaves%20e%20valores.png")
