@@ -2,6 +2,8 @@
 
 O srping security trabalha com a segurança da nossa API. Através dela nós podemos criptografar senhas, dar autorização a alguns usuários e assim deixá-lo mais segura.
 
+---
+
 ##  SecurityConfig - Autorização para usar a API.
 
 Quando nós criamos alguma aplicação com springsecurity, normalmente ele gera um código que deve ser implementado na requisição de uma aplicação para que o se usos seja altorizado. Mas, podemos configurar para que o código rode sem precisar dessa autorização. Para isso, devemos criar uma **classe de configuração** no pacote **config**.
@@ -16,6 +18,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     }
 }
 ```
+
+---
 
 ## Beans Validations
 
@@ -92,6 +96,8 @@ Define o tamanho permitido em alguma string.
 private String lastName;
 ```
 
+---
+
 ## BCryptPasswordEncoder - API para criptografia.
 
 Essa API é obtida quando colocamos a dependência do springsecurity na nossa aplicação.
@@ -126,6 +132,8 @@ public UserDTO insert(UserInsertDTO dto){
 ```
 
 Obs.: Esse **UserInsertDTO** é uma classe que extend **UserDTO** porém tem mais um atributo, que é a senha.
+
+---
 
 ## Tratamento de exceção - MethodArgumentNotValidException
 
@@ -455,6 +463,104 @@ public UserDTO update(Long id, UserUpdateDTO dto){
         return new UserDTO(entity);
     } catch(EntityNotFoundException e) {
         throw new ResourceNotFoundException("Id not found " + id);
+    }
+}
+```
+
+---
+
+# Autorização e autenticação
+
+Dependências: **spring security test e spring security oauth2 autoconfigure**
+
+Para poder fazer a comunicação com o servidor e conseguir um token de acesso.
+
+## Interfaces
+
+### UserDetails
+
+É uma interface que será implementada na entidate do Usuário. Quando implementarmos, ele irá criar os métodos que faltam.
+
+```
+public class User implements UserDetails, Serializable{
+    ...
+
+    @Override
+    public String getUsername(){
+        return email;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities(){
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
+    }
+
+    // O role aqui é o papel de cada usuário de acordo com o exemplo visto na video aula.
+
+    ...
+}
+```
+
+De restante dos métodos, a fins de testes, podemos retornar true para todos.
+
+### UserDetailsService
+
+É uma interface que será implementada no UserService.
+
+```
+public class UserService implements UserDetailsService {
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Já criado no nosso repositório
+        User user = repository.findByEmail(username);
+        if(user == null){
+            logger.error("User not found: " + username);
+            throw new UsernameNotFoundException("Email not found");
+        }
+
+        logger.info("User found: " + username);
+        return user;
+    }
+}
+```
+
+**Implementação de um Logger**
+
+```
+private static Logger logger = LoggerFactory.getLogger(UserService.class);
+```
+
+## Classes
+
+É o mesmo SecurityConfig que criamos, porém, podemos renomear para WebSecurityConfig se quisermos. Iremos fazer algumas alterações.
+
+```
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter{
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Override
+    public void configure(WebSecurity web) throws Exception{
+        web.ignoring().antMatchers("/actuator/**");
+    }
+
+    // Precisamos criar uma sobrecarga para o mesmo método configure. Nas configurações de geração, como o construtor e getters e setters, tem o de override. Iremos escolher o configure(AuthenticationManagerBuilder). Nele iremos usar as configurações como BCrypt e o UserDetailsSerice.
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+    }
+
+    // Chamaremos mais um Override
+    @Override
+    @Bean
+    protected AuthenticationManager authenticationManager() throws Exception {
+        return super.authenticationManager();
     }
 }
 ```
