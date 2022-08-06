@@ -569,15 +569,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 # Autorização e autenticação - OAuth2
 
+## Configuração para externalizar alguns valores
+
+Nós usaremos o arquivo application.properties para criar as variáveis. Adicionaremos as seguintes linhas:
+
+```
+spring.profiles.active=${APP_PROFILE:test}
+
+spring.jpa.open-in-view=false
+
+security.oauth2.client.client-id=${CLIENT_ID:dscatalog}
+security.oauth2.client.client-secret=${CLIENT_SECRET:dscatalog123}
+
+jwt.secret=${JWT_SECRET:MY-JWT-SECRET}
+jwt.duration=${JWT_DURATION:86400}
+```
+
 ## Beans para Token JWT
 
 Pode ser colocado no AppConfig. Eles serão capazes de acessar o token.
 
 ```
+@Value("${jwt.secret}")
+    private String jwtSecret;
+
 @Bean
 public JwtAccessTokenConverter accessTokenConverter() {
 	JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
-	tokenConverter.setSigningKey("MY-JWT-SECRET");
+	tokenConverter.setSigningKey(jwtSecret);
 	return tokenConverter;
 }
 
@@ -595,6 +614,15 @@ Nós iremos criar ela no pacote de configuração.
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+
+    @Value("${security.oauth2.client.client-id}")
+    private String clientId;
+
+    @Value("${security.oauth2.client.client-secret}")
+    private String clientSecret;
+
+    @Value("${jwt.duration}")
+    private Integer jwtDuration;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -618,11 +646,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     protected void configure(ClientDetailsServiceConfigurer clients) throws Exception{
         clients.inMemory()
-        .withClient("usuario")
-        .secret(passwordEncoder.encode("senha123"))
+        .withClient(clientId)
+        .secret(passwordEncoder.encode(clientSecret))
         .scopes("read", "write")
         .authorizedGrantTypes("password")
-        .accessTokenValiditySeconds(86400);
+        .accessTokenValiditySeconds(jwtDuration);
     }
 
     @Override
