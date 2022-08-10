@@ -679,3 +679,66 @@ Após isso, precisaremos colocar as credenciais do usuário. Iremos na aba Body 
 Logo após, iremos colocar as chaves e os valores para as credenciais. O usuário e a senha devem estar registradas no banco de dados.
 
 ![Direcionamento segundo a instrução acima](./Fotos/chaves%20e%20valores.png)
+
+---
+
+# Adicionando informações no Token
+
+Caso a nossa aplicação precise de algumas informações, como o nome, id, email ou outras coisas nescessárias de alguém que foi autenticado, podemos fazer isso da seguinte forma:
+
+Criaremos um pacote chamado **Components** para por os nossos componentes.
+
+**Classe JwtTokenEnhancer**
+
+```
+@Component
+public class JwtTokenEnhancer implements TokenEnhancer{
+    
+    // Esse repositório irá auxiliar o método abaixo
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    // Método OAuth2AccessToken exigido após implantar o TokenEnhancer (accessToken, authentication) {
+        User user = userRepository.findByEmail(authentication.getName());
+
+        // Adicionando objetos no token. Eles estarão dentro do token
+        Map<String, Object> map = new HasMap<>();
+        map.put("userFirstName", user.getFisrtName());
+        map.put("userId", user.getId());
+
+        // Consolidando os objetos adicionados.
+        // Esse Default é bem mais específico do que o OAuth2AccessToken. Ele possui o método para adicionar.
+        DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
+        token.setAdditionalInformation(map);
+
+        return accessToken; // Ou token.
+    }
+}
+```
+
+**Injetando na classe** no AuthorizationServerConfig.
+
+```
+@Configuration
+@EnableAuthorizationServer
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter{
+    ...
+    @Autowired
+    private JwtTokenEnhancer tokenEnhancer;
+    ...
+
+     @Override
+    protected void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception{
+
+        TokenEnhancerChain chain = new TokenEnhancerChain();
+        // Esse objeto espera uma lista
+        chain.setTokenEnhancer(Arrays.asList(accessTokenConverter, tokenEnhancer));
+
+        endpoints.authenticationManager(authenticationManager)
+        .tokenStore(tokenStore)
+        .accessTokenConverter(accessTokenConverter)
+        //Adicional
+        .tokenEnhancer(chain);
+}
+```
