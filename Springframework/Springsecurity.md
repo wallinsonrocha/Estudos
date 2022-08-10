@@ -796,3 +796,45 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
     }
 }
 ```
+
+## Configuração para o H2 Console
+
+Para que seja permitido entrar no H2 console como faziamos antes, devemos configurar sua permissão. Para isso, nas rotas públicas devemos colocar o seu resource lá.
+
+```
+@Configuration
+@EnableResourceServer
+public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
+    ...
+    @Autowired
+    private Environment env;
+
+    private static final String[] PUBLIC = { "/oauth/token", "/h2-console/**" };
+    ...
+
+    @Override
+    // (HttpSecurity http) {
+
+        // Configuração para liberar o H2
+        if(Arrays.asList(env.getActiveProfiles()).contains("test")){
+            http.headers().frameOptions().disable();
+        }
+
+        http.authorizedRequests()
+        .antMatchers(PUBLIC).permitAll() 
+        .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
+        .antMatchers(OPERATOR_OR_ADMIN).hasAnyRoles("OPERATOR", "ADMIN")
+        .antMatchers(ADMIN).hasAnyRoles("ADMIN")
+        .anyRequest().authenticated();
+    }
+}
+```
+
+## Para o postman na aba Tests
+
+```
+if(responseCode.code >= 200 && responseCode.code >= 300){
+    var json = JSON.parse(responseBody);
+    postman.setEnvironmentVariable('token', json.access_token);
+}
+```
