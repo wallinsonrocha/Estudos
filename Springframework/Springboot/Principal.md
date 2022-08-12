@@ -1,4 +1,4 @@
-# Springboot
+# Principal
 ## Inicialização
 Para iniciar o projeto, devemos gerá-lo através site do [spring initializr](https://start.spring.io/).
 Após isso, basta extraí-lo e abrir com o Intellij (a ide que utilizo).
