@@ -68,7 +68,8 @@ public String index(){
 ```
 public User findById(Long id){
     Optional<User> obj = repository.findById(id);
-    return obj.get();
+    User entity = obj.orElseThrow(()-> new NotFoundException(id));
+    return new UserDTO(entity);
 }
 ```
 
@@ -77,13 +78,15 @@ public User findById(Long id){
 ```
 @GetMapping("/{id}")
 
-public ResponseEntity<User> findById(@PathVariable Long id)  { //ResponseEntity pertence ao spring
-    User obj = service.findById(id);
+public ResponseEntity<UserDTO> findById(@PathVariable Long id)  { //ResponseEntity pertence ao spring
+    UserDTO obj = service.findById(id);
     reuturn ResponseEntity.ok().body(obj); // Para a requisição ser exposta no body.
 } 
 ```
 
 #### FindAll
+
+Obs.: Recomenda-se o modelo paginado.
 
 **Service**
 
@@ -120,14 +123,15 @@ public User insert(User obj){
 Há uma outra forma de criar o service através de uma classe DTO.
 
 ```
+@Transactional
 public UserDTO insert(UserDTO dto){
     User entity = new User();
-    
-    CopyDtoToEntity(dto, entity);
-
-    entity = respository.save(entity);
+    entity.setEmail(dto.getEmail());
+    entity.setRole(dto.getRole());
+    ...
+    entity = repository.save(entity);
     return new UserDTO(entity);
-}
+	}
 
 ...
 
@@ -136,7 +140,7 @@ private CopyDtoToEntity(UserDTO dto, User entity){
     entity.setDescription(dto.getDescription());
     ...
 
-    // Considerando que as categorias no UserDTO foram configuradas
+    // Essa parte pertence à categoria. Aqui é uma lista.
     entity.getCategories().clear();
     for(CategoryDTO catDTO : dto.getCategory()){
         Category category = categoryRepository.getOne(catDTO.getId);
@@ -149,7 +153,7 @@ private CopyDtoToEntity(UserDTO dto, User entity){
 
 ```
 @PostMapping
-public ResponseEntity<User> insert(@RequestBody User obj){
+public ResponseEntity<UserDTO> insert(@RequestBody UserDTO obj){
     obj = service.insert(obj);
     URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
         .buildAndExpand(obj.getId()).toUri();
@@ -223,7 +227,7 @@ private CopyDtoToEntity(UserDTO dto, User entity){
     entity.setDescription(dto.getDescription());
     ...
 
-    // Considerando que as categorias no UserDTO foram configuradas
+    // Essa parte pertence à categoria. Aqui é uma lista.
     entity.getCategories().clear();
     for(CategoryDTO catDTO : dto.getCategory()){
         Category category = categoryRepository.getOne(catDTO.getId);
