@@ -169,7 +169,15 @@ Através dele podemos deletar algum usuário. No arquivo de service, onde faz a 
 
 ```
 public void delete(Long id){
-    repository.deleteById(id);
+    try{
+        repository.deleteById(id);
+    }
+    catch(EmptyResultDataAccessException e){
+        throw new ResourceNotFoundException("Id not found " + id);
+    }
+    cacth(DataIntegrityViolationException e){
+        throw new DatabaseException("Integrity violation");
+    }
 }
 ```
 
@@ -192,6 +200,7 @@ Para fazer atualizações em algum usuário.
 **Services**
 
 ```
+@Transactional
 public User update(Long id, User obj){
     User entity = repository.getOne(id);
     updateData(entity, obj);
@@ -207,10 +216,10 @@ private void updateData(User entity, User obj){
 Há uma outra forma de criar o service através de uma classe DTO.
 
 ```
+@Transactional
 public UserDTO update(Long id, UserDTO dto){
     try{
-        User entity = new User();
-        
+        User entity = repository.getOne(id);
         CopyDtoToEntity(dto, entity);
 
         entity = respository.save(entity);
@@ -222,7 +231,7 @@ public UserDTO update(Long id, UserDTO dto){
 
 ...
 
-private CopyDtoToEntity(UserDTO dto, User entity){
+private void CopyDtoToEntity(UserDTO dto, User entity){
     entity.setName(dto.getName());
     entity.setDescription(dto.getDescription());
     ...
