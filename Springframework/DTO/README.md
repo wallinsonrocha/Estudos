@@ -24,6 +24,9 @@ public class UserDTO implements Serializable{
     private String id;
 	private String name;
 	
+	// Caso haja alguma collection
+	Set<RoleDTO> roles = new HashSet<>();
+	
 	public UserDTO() {
 	}
 	
@@ -35,6 +38,13 @@ public class UserDTO implements Serializable{
 	public UserDTO(User obj) {
 		this.id = obj.getId();
 		this.name = obj.getName();
+	}
+	
+	// Caso haja alguma colection
+	public UserDTO(User user) {
+		this.id = user.getId();
+		this.email = user.getEmail();
+		user.getRoles().forEach(role -> this.roles.add(new RoleDTO(role)));
 	}
     
     ...
