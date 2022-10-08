@@ -54,7 +54,7 @@ Uma anotação que faz com que a data inserida seja passada ou presente.
 private Instant date;
 ```
 
-### @PastOrPresent
+### @FutureOrPresent
 
 Uma anotação que faz com que a data inserida seja futura ou presente.
 
