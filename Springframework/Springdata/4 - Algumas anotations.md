@@ -306,7 +306,7 @@ Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nó
 private List<Order> orders = new ArrayList<>();
 ```
 
-> Obs.: Nas coleções nós não criamos Setters nem adicionamos ele no Construtor. A coleção que me refiro è a lista que foi instanciada.
+> Obs.: Nas coleções nós não criamos Setters. A coleção que me refiro é a lista que foi instanciada.
 
 ### @ManyToMany
 
