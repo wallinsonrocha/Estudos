@@ -302,8 +302,12 @@ public Class Order implements Serializeble{
 Com essa anotation nós reforçamos essa ligação. Para que ela seja usada, nós devemos mapear ela de acordo com o atributo que contém a anotation @ManyToOne. Exemplo feito na classe do Cliente. Obs: O many to one e o one to many se completam.
 
 ```
-@OneToMany (mappedBy = 'client')
-private List<Order> orders = new ArrayList<>();
+public Class Products implements Serializeble{
+	...
+	@OneToMany (mappedBy = 'client')
+	private List<Order> orders = new ArrayList<>();
+	...
+}
 ```
 
 > Obs.: Nas coleções nós não criamos Setters nem construtores para ele (este só é criado nos DTOs) . A coleção que me refiro é a lista que foi instanciada.
