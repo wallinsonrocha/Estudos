@@ -11,7 +11,7 @@ frutas = [] // Lista vazia
 
 letras = list("python")
 
-numeros = list(ranger(10))
+numeros = list(range(10))
 
 carro = ["Ferrari", "F8", 123, True]
 ```
