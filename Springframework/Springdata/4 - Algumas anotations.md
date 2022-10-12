@@ -333,7 +333,7 @@ Em alguns momentos nós poderemos desejar que a classe Product, ao ser carregada
 ```
 public class Product ...
 ...
-@ManyToMany(fecth = FetchType.EAGER)
+@ManyToMany(fetch = FetchType.EAGER)
 @JoinTable(name = "tb_product_category", 
     joinColumns = @JoinColumn(name = "product_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"));
