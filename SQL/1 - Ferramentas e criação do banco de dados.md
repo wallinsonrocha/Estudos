@@ -1,4 +1,4 @@
-# Aula 1
+# SQL
 
 Os bancos de dados servem para armazenar aquilo que, em seu site, deve ficar no servidor para acessar quando precisar. Um exemplo disso são os dados de um cliente como as sua senhas, email, preferências e etc.
 

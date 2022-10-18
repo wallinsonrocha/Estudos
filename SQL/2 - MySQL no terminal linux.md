@@ -1,4 +1,4 @@
-# Aula 3
+# SQL
 
 Dentre os instaladores que temos, o lampp é uma alternativa exclusiva ao linux. Com esse pacote, assim como os demais, nós temos acesso ao mysql do terminal.
 

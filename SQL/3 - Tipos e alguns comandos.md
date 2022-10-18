@@ -1,4 +1,48 @@
-# Aula 2
+# SQL
+
+## Tipos de dados
+
+### NUMBERS
+Serve para armazenar números. Segue exemplo dos mais utilizados
+
+Tipo | Descrição 
+-------- | ---------- 
+bit | Números inteiros que pode ser 0, 1 ou null
+smallint | Permite números inteiros entre -32,768 e 32,767
+int | Permite números inteiros entre -2,147,483,648 e 2,147,483,647
+bigint | Permite números inteiros entre -9,223,372,036,854,775,808 e 9,223,372,036,854,775,807
+float(n) | n é o parâmetro para definir se o campo deve conter 4 ou 8 bytes. float(24) contém um campo de 4 bytes, enquanto float(53) ocupa 8.
+real | Precisão de número flutuante de -3,40E + 38 a 3,40E + 38
+decimal(e,d) | Define quantas casas para a esquerda e quantas para a direita em relação à virgula.
+
+### STRINGS
+Armazena caracteres. Segue alguns exemplos:
+
+Tipo | Descrição 
+-------- | ---------- 
+char(n) | Tamanho fixo, completado com espaços em bracos.
+varchar(n) | Tamanho variável com limite.
+varchar(max) | Permite mais do que 8 mil caracteres.
+text | Permite 2GB de dados (texto).
+enum('a','b','c','um','dois','três'...) | Permite armazenar um valor selecionado de uma lista de valores aceitáveis.
+
+### DATA
+
+Armazena datas. Segue alguns exemplos:
+
+Tipo | Descrição 
+-------- | ---------- 
+datetime | De 1 de janeiro de 1753 a 31 de dezembro de 9999 com uma precisão de 3,33 milisegundos
+datetime2 | De 1º de janeiro de 0001 a 31 de dezembro de 9999 com precisão de 100 nanossegundos
+date | Armazena apenas uma data. De 1 de janeiro de 0001 a 31 de dezembro de 9999
+time | Armazena um tempo apenas para uma precisão de 100 nanosegundos
+datetimeoffset | O mesmo que datetime2 com a adição de um deslocamento de fuso horário
+timestamp | Armazena um número único que é atualizado sempre que uma linha é criada ou modificada. O valor do timestamp é baseado em um relógio interno e não corresponde ao tempo real. Cada tabela pode ter apenas uma variável timestamp
+
+### Outros
+Há outros tipos, mas os mais utilizados são esses.
+
+---
 
 ## Criando banco de dados
 Para criar, basta dar o seguinte comando:
@@ -22,7 +66,7 @@ CREATE TABLE pessoa (
 );
 ```
 
-## Adicionando dados
+## Adicionando dados na tabela
 Para inserir os dados, nós damos o seguinte comando:
 ```
 INSERT INTO pessoa (nome, nascimento) VALUES ('Wallinson', '2000-08-08');
