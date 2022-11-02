@@ -88,7 +88,7 @@ Irá definir uma string build para retornar o que queremos exibir na tela. Utili
 ```
 class Mamifero:
     def __init__(self, pelo, acordado=True):
-        self. pelo = pelo
+        self.pelo = pelo
         self.acordado = acordado
 
 class Cachorro(Mamifero):
@@ -98,4 +98,30 @@ class Cachorro(Mamifero):
 
     def __str__(self):
         return "Cachorro"
+```
+
+## Encapsulamento
+No python, diferente do Java, não há uma palavra que defina um atributo como público ou privado. Como convenção colocamos um "_" (private) ou "__" (protected) para definí-lo como privado. Isso serve para atributos e para métodos.
+```
+class Mamifero:
+    def __init__(self, pelo, acordado=True):
+        self._pelo = pelo
+        self._acordado = acordado
+```
+
+### Getters and Setters
+Para criá-los, usamos um decorador chamado **@property** (para o getter) e o **@nome.setter** (para setter). Ele irá ser colocado junto a um método.
+```
+class Produto:
+    def __init__(self, nome, preco):
+        self.nome = nome
+        self.preco = preco
+
+    @property
+    def preco(self):
+        return self._preco
+
+    @preco.setter
+    def nome(self, valor):
+        self._preco = valor
 ```
