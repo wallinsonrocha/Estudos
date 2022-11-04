@@ -30,7 +30,7 @@ Os apps são respostas do servidor quando acessada determinada URI. No arquivo u
 python manage.py startapp nome
 ```
 
-Será criado uma pasta com vários arquivos. As funções que seriam criadas no arquivo urls, serão criadas em view. Dentro dela iremos fazer alguns imports para que a função possa ser executada e criá-las.
+Será criado uma pasta com vários arquivos. As funções que seriam criadas no arquivo urls, serão criadas em **view**. Dentro dela iremos fazer alguns imports para que a função possa ser executada e criá-las.
 ```
 from django.http import HttpResponse
 
