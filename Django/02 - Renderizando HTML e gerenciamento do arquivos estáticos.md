@@ -36,13 +36,13 @@ Exemplo com o header.
 
 Para incluirmos o parcial na pagina principal, usamos o {% include 'caminho' %}. Exemplo:
 ```
-{% include '{% include 'recipes/partials/head.html' %}' %}
+{% include 'recipes/partials/head.html' %}
 ```
 
 ## Arquivos estáticos
-Para implementarmos arquivos estáticos no nosso HTML, iremos, primeiramente, habilitá-lo e depois direcionar o caminho dele. 
+Para implementarmos arquivos estáticos no nosso HTML, iremos habilitá-lo e depois direcionar o caminho dele. 
 
-Mas, antes disso, é importante criarmos uma pasta chamada **static** para armazenar o nosso CSS e nossas imagens. E, dentro dela, iremos criar uma pasta chamada **media** para imagens e outra chamada **css**.
+Mas, antes disso, é importante criarmos uma pasta chamada **static/nomeApp** (cria-se primeiro a pasta static e, dentro dela, nomeApp) para armazenar o nosso CSS e nossas imagens. E, dentro dela, iremos criar uma pasta chamada **media** para imagens e outra chamada **css**.
 > Obs.: Ela deve ser criada fora de **templates**.
 
 Importação no arquivo HTML. Geralmente na primeira linha do código.

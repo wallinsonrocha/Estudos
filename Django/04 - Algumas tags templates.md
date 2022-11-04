@@ -1,6 +1,16 @@
 # Django
 
 ## Herança 
+
+Antes de partir para os exemplos, não podemos esquecer de tornar a pasta **base_template** reconhecida. Para isso, em settings, na parte de **TEMPLATES** e, mais especificamente em **'DIR'**, iremos adicionar
+```
+'DIRS': [
+            BASE_DIR / 'base_templates', # Parte adicionada
+        ],
+```
+> Lembre-se que o base_template deve ser criado fora da aplicação.
+
+
 Vamos supor que na nossa página o home.html estava assim:
 ```
 {% include 'recipes/partials/head.html' %}
@@ -31,7 +41,7 @@ Vamos supor que na nossa página o home.html estava assim:
 
 No nosso projeto, em um determinado ponto, podemos ter elementos em comum em várias páginas HTML. Para reutilizar esses elementos em comum podemos criar uma pasta **base_templates** e criar um base.
 
-Podemos cortar parte do código e por nesse arquivo criando uma herança para extender para home.html.
+Podemos cortar parte do código e por nesse arquivo criando uma herança para extender em home.html.
 ```
 {% include 'recipes/partials/head.html' %}
 
@@ -68,3 +78,4 @@ Observe que há um **{% block name %}{ % endbloc name %}**. Ele será responsáv
 {% endblock content %} # importante
 ```
 
+Isso irá fazer com que os conteúdos de **home** que estão dentro do bloco sejam colocados em **base** sempre que home for acessado.
