@@ -39,6 +39,31 @@ Para incluirmos o parcial na pagina principal, usamos o {% include 'caminho' %}.
 {% include 'recipes/partials/head.html' %}
 ```
 
+## {{name_variavel}}
+Através de {{variavel}} podemos colocar um valor que está armazenado em nosso contexto na view.
+
+**view.py**
+```
+def home(request):
+    return render(request, 'caminho', context={
+        'name': 'Wallinson',
+    })
+```
+
+**Exemplo com o header**
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{name}}</title>
+</head>
+```
+
+Dessa forma no título estará 'Wallinson'
+
 ## Arquivos estáticos
 Para implementarmos arquivos estáticos no nosso HTML, iremos habilitá-lo e depois direcionar o caminho dele. 
 

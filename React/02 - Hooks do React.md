@@ -2,30 +2,23 @@
 
 São hooks que vem com o próprio React.
 
-## useState - Importação
+## useState - Importação e utiliização
 
 ```
 import React, {useState} from 'react';
-```
 
-## useState - Utilização
-
-```
+...
 function App(){
     const [ texto, setTexto ] = useState('');
 ```
 
-## useEffect - Importação
-
-```
-import {useEffect} from 'react';
-```
-
-## useEffect - Utilização
-
+## useEffect - Importação e utilização
 Ele é, geralmente, usado com useState, mas pode ser usado de forma independente.
 
 ```
+import {useEffect} from 'react';
+
+...
 const [contagem, setContagem] = useState(0);
 
 useEffect(() => {

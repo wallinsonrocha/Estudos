@@ -27,7 +27,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 ```
 
-Além disso, precisamos configurar o arquivo urls.py do projeto principal (não o da aplicação criada). Lá iremos adicionar:
+Além disso, precisamos configurar o arquivo **urls.py** do **projeto principal** (não o da aplicação criada). Lá iremos adicionar:
 ```
 ...
 from django.conf.urls.static import static
@@ -57,12 +57,12 @@ class Category(models.Model):
 ```
 class Recipes(models.Model):
     ...
-    category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True
+    category = models.ForeingKey(
+        Category, on_delete=models.SET_NULL, null=True, blank=True, default=None
     )
 ```
 
-Dentro do ForeignKey selecionamos para quem ele faz a relação, o que fazer quando for deletado e permitir estar nulo.
+Dentro do ForeingKey selecionamos para quem ele faz a relação, o que fazer quando for deletado e permitir estar nulo.
 
 ### Relações com Auth
 Aqui devemos fazer a importação da classe User para poder manipular as relações do usuário.
@@ -93,3 +93,4 @@ Após isso iremos fazer as migrações.
 python manage.py makemigrations
 ```
 Dessa forma os Models serão criados.
+

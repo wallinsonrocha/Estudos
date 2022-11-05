@@ -25,3 +25,4 @@ Há uma outra forma de fazer esse registro.
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin)
 ```
+

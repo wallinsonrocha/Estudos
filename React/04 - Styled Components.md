@@ -4,6 +4,10 @@
 
 ```
 yarn add styled-components --save
+
+ou
+
+npm install styled-components
 ```
 
 ```

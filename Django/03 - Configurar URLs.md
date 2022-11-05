@@ -7,7 +7,7 @@ from . import views # views, aqui, é o arquivo.
 
 urlpatterns = [
     path('', views.home),
-    path('recipes/<int:id>', views.recipes),
+    path('recipes/<int:id>', views.recipes, name="recipe"),
 ]
 ```
 

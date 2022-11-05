@@ -1,8 +1,11 @@
 # Django
 
+- [Herança](#herança)
+
+
 ## Herança 
 
-Antes de partir para os exemplos, não podemos esquecer de tornar a pasta **base_template** reconhecida. Para isso, em settings, na parte de **TEMPLATES** e, mais especificamente em **'DIR'**, iremos adicionar
+Antes de partir para os exemplos, não podemos esquecer de tornar a pasta **base_template** reconhecida. Para isso, em settings, na parte de **TEMPLATES** e, mais especificamente em **'DIR'**, iremos adicionar:
 ```
 'DIRS': [
             BASE_DIR / 'base_templates', # Parte adicionada
@@ -79,3 +82,65 @@ Observe que há um **{% block name %}{ % endbloc name %}**. Ele será responsáv
 ```
 
 Isso irá fazer com que os conteúdos de **home** que estão dentro do bloco sejam colocados em **base** sempre que home for acessado.
+
+Seria muito importante dividir o nosso código no **base.html** dessa forma:
+```
+<head>
+    {% include 'recipes/partials/head.html' %}
+</head>
+<body>
+    {% include 'recipes/partials/header.html' %}  
+    <main>
+        {% block section %}{% endblock section %}
+    </main>
+    <footer>
+        <img src="./assets/1b-arquivos-necessarios-criando-topo/img/fundo-rodape.png">
+        <ul>
+            <li><a href="#">HOME</a></li>
+            <li><a href="#">EXPOSIÇÕES</a></li>
+            <li><a href="#">PESQUISA</a></li>
+            <li><a href="#">ACERVO</a></li>
+            <li><a href="#">VÍDEOS</a></li>
+            <li><a href="#">FOTOS</a></li>
+            <li><a href="#">CONTATO</a></li>
+        </ul> 
+        <p>2019 <a href="#">Museu Nacional</a> - Todos os direitos reservados.</p>
+    </footer>
+
+    <script type="module" src="./assets/javascript/main.js"></script>
+</body>
+
+</html>
+```
+
+Assim estará bem dividido com head e body.
+
+## If, else, for e url
+
+Assim como o **include** tem a sua tag, o if, else e o for também tem.
+```
+# IF e ELSE
+{% if condição %}
+    ...
+{% else %}
+    ...
+{% endif  %}
+
+#FOR
+{% for variavel in lista/obejeto %}
+    ...
+{% endfor %}
+```
+
+A **Url** é usada no html da nossa aplicação.
+```
+<footer>
+        <img src="{% static 'recipes/partials/recipe.jpg' %}">
+        <ul>
+            <li><a href="{% url 'recipes:category' recipe.category.id %}">HOME</a></li>
+        </ul> 
+        <p>2019 <a href="#">Museu Nacional</a> - Todos os direitos reservados.</p>
+    </footer>
+```
+
+É importante ressaltar que em **'recipes:category'**, **category** refere-se ao nome que atribuimos na criação da **url de catergory**.
