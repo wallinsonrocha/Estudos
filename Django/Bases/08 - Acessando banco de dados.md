@@ -16,7 +16,7 @@ def home(request):
     })
 ```
 
-Caso desejarmos acessar os atributos de uma **foreing key** nós faremos:
+Caso desejarmos acessar os atributos de uma **foreign key** nós faremos:
 ```
 def home(request, category_id):
     recipes = Recipe.objects.filter(

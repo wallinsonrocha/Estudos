@@ -32,7 +32,7 @@ category.order_by('id', '-name')
 for recipe in recipes.order_by('id'): print(recipe.id, recipe.title)
 ```
 
-Para criar um novo dado, recomenda-se utilizar um model que não **contenha foreing key** primeiro.
+Para criar um novo dado, recomenda-se utilizar um model que não **contenha foreign key** primeiro.
 
 ### CRIANDO DADO NO BANCO DE DADOS
 ```

@@ -57,12 +57,12 @@ class Category(models.Model):
 ```
 class Recipes(models.Model):
     ...
-    category = models.ForeingKey(
+    category = models.ForeignKey(
         Category, on_delete=models.SET_NULL, null=True, blank=True, default=None
     )
 ```
 
-Dentro do ForeingKey selecionamos para quem ele faz a relação, o que fazer quando for deletado e permitir estar nulo.
+Dentro do foreignKey selecionamos para quem ele faz a relação, o que fazer quando for deletado e permitir estar nulo.
 
 ### Relações com Auth
 Aqui devemos fazer a importação da classe User para poder manipular as relações do usuário.

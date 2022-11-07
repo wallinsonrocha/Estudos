@@ -1,8 +1,5 @@
 # Django
 
-- [Herança](#herança)
-
-
 ## Herança 
 
 Antes de partir para os exemplos, não podemos esquecer de tornar a pasta **base_template** reconhecida. Para isso, em settings, na parte de **TEMPLATES** e, mais especificamente em **'DIR'**, iremos adicionar:
@@ -144,3 +141,36 @@ A **Url** é usada no html da nossa aplicação.
 ```
 
 É importante ressaltar que em **'recipes:category'**, **category** refere-se ao nome que atribuimos na criação da **url de catergory**.
+
+## for empaty
+Semelhante ao if mas para o for. Isso ajudará a poupar linhas de código.
+
+```
+{% for recipe in recipes %}
+    {% include 'recipes/partials/recipe.html' %}
+{% empty %}
+    <div class="center m-y">
+        <h1>No recipes found here 🥲</h1>
+    </div>
+{% endfor %}
+```
+
+## safe e linebreaksbr
+Permissão para renderizar ou não o HTML de um determinado conteúdo.
+
+```
+{% if is_detail_page is True %}
+    <div class="preparation-steps">
+        {% if recipe.preparation_steps_is_html is True %}
+            {{ recipe.preparation_steps|safe }}
+        {% else %}
+            {{ recipe.preparation_steps|linebreaksbr }}
+        {% endif %}
+    </div>
+{% endif %}
+```
+
+No exemplo acima diz que, se tal texto não for html, ele não será renderizado como html, mas como texto. Caso contrário, se for, ele irá renderizar como hmlt.
+
+**linebreaksbr** - Renderiza como texto.
+**safe** - Renderiza como html.
