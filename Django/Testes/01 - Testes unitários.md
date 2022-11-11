@@ -36,3 +36,6 @@ class RecipeURLsTest(TestCase):
 ```
 
 > **assert** é um retorno obrigatório sobre um determinado resultado. Caso não seja retornado a condição que atribuímos, significa que estamos falhando no teste. Nele podemos colocar a condição que deve retornar e a mensagem (esta é opcional).
+
+## Dicas
+Preferêncialmente é bom separarmos as nossas classes por pastas.

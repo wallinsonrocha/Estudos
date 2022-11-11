@@ -76,3 +76,27 @@ def test_recipe_detail_view_function_is_correct(self):
     self.assertIs(view.func, views.recipe)
 ```
 Outro exemplo.
+
+### assertTemplateUsed
+Usado para verificar o template usado.
+```
+def test_recipe_home_view_loads_correct_template(self):
+    response = self.client.get(reverse('recipes:home'))
+    self.assertTemplateUsed(response, 'recipes/pages/home.html')
+```
+
+### assertIn
+Verifica se existe alguma frase dentro de um determinado conteúdo.
+```
+def test_recipe_home_template_loads_recipes(self):
+    # Need a recipe for this test
+    self.make_recipe()
+
+    response = self.client.get(reverse('recipes:home'))
+    content = response.content.decode('utf-8')
+    response_context_recipes = response.context['recipes']
+
+    # Check if one recipe exists
+    self.assertIn('Recipe Title', content)
+    self.assertEqual(len(response_context_recipes), 1)
+```
