@@ -9,9 +9,9 @@ pip install pytest pytest-django
 Após isso, precisamos criar um arquivo `pytest.ini` para que as configurações dos nossos testes sejam reconhecidas. 
 ```
 [pytest]
-DJANGO_SETTINGS_MODULE = project.settings # Nome do nosso projeto
-python_files = test.py tests.py test_*.py tests_*.py *_test.py *_tests.py # Arquivos para serem reconhecidos
-addopts = 
+DJANGO_SETTINGS_MODULE = project.settings
+python_files = test.py tests.py test_*.py tests_*.py *_test.py *_tests.py
+adopts =
   --doctest-modules
   --strict-markers
   -rP
