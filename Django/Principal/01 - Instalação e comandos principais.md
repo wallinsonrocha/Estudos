@@ -56,11 +56,12 @@ urlpatterns = [
 
 #### No arquivo urls.py principal
 ```
+from django.contrib import admin
 from django.urls import include, path
-...
+
 urlpatterns = [
     path('admin', admin.site.urls),
-    path('', include('nomeDoApp.urls'))
+    path('', include('orcamento.urls'))
 ]
 ```
 

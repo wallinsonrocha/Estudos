@@ -174,3 +174,12 @@ No exemplo acima diz que, se tal texto não for html, ele não será renderizado
 
 **linebreaksbr** - Renderiza como texto.
 **safe** - Renderiza como html.
+
+## Url
+Para buscar o derecionamento de uma url. Pode ser usada dentro do form.
+```
+<form action="{% url 'recipes:search' %}" method="GET" class="search-form">
+    <input type="search" class="search-input" name="q" required>
+    <button type="submit" class="search-button"><i class="fas fa-search"></i></button>
+</form>
+```

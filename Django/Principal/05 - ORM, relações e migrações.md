@@ -6,7 +6,7 @@ Para criarmos os nossos modelos relacionais, assim como o java, estabeleceremos-
 class Recipes(models.Model):
     title = models.CharField(max_length=65)
     description = models.CharField(max_length=165)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     preparation_time = models.IntegerField()
     preparation_time_unit = models.CharField(max_length=65)
     servings = models.IntegerField()
@@ -48,18 +48,48 @@ class Recipes(models.Model):
 
 ## Relações
 Supomos que um dos atributos depende de uma classe para ser preenchida. Para fazer a relação entre elas, a configuração é a seguinte:
-#### Classe categoria
+
+
+### ManyToOne
+**models.ForeignKey()**
 ```
 class Category(models.Model):
     name = models.CharField(max_length=65)
-```
-#### Classe recipes
-```
+
+
 class Recipes(models.Model):
     ...
     category = models.ForeignKey(
-        Category, on_delete=models.SET_NULL, null=True, blank=True, default=None
+        Category, on_delete=models.SET_NULL, null=True, blank=True, default=None, related_name="recipes"
     )
+```
+
+
+### ManyToMany
+**models.ManyToManyField()**
+```
+class Pessoa(models.Model):
+    nome = ...
+    ...
+
+
+class Filmes(models.Model):
+    nome = ...
+    pessoas = models.ManyToManyField(Pessoa, related_name="filmes")
+```
+Aplicação:
+```
+joao = Pessoa.objects.create(name="Joao")
+felipe = Pessoa.objects.create(name="Felipe")
+
+filme1 = Filmes.objects.create(name="filme1")
+filme2 = Filmes.objects.create(name="filme2")
+
+joao.filmes.add(filme1, filme2)
+felipe.filmes.add(filme1)
+
+joao.filmes.all() # QuerySet com os filmes que joao assistiu
+filme1.pessoas,all() # QuerySet de pessoas que assistiram
 ```
 
 Dentro do foreignKey selecionamos para quem ele faz a relação, o que fazer quando for deletado e permitir estar nulo.
