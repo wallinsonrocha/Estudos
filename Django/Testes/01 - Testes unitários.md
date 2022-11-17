@@ -22,6 +22,7 @@ markers =
 
 ## Iniciando testes
 Na pasta da nossa aplicação iremos até o arquivo de `tests.py`. Lá dentro iremos criar os nossos testes.
+> Recomenda-se seguir a dica de criar uma pasta para colocar os testes.
 
 Para criar, iremos usar uma classe que irá englobar todos os nossos testes unitários.
 Exemplo.:
@@ -37,5 +38,18 @@ class RecipeURLsTest(TestCase):
 
 > **assert** é um retorno obrigatório sobre um determinado resultado. Caso não seja retornado a condição que atribuímos, significa que estamos falhando no teste. Nele podemos colocar a condição que deve retornar e a mensagem (esta é opcional).
 
+## Rodando nossos testes
+```
+pytest
+```
+
 ## Dicas
 Preferêncialmente é bom separarmos as nossas classes por pastas.
+
+### Separar testes por pastas
+Criaremos uma pasta chamada `tests` para armazenar nossas classes de testes.
+> Não podemos nos esquecer de criar um arquivo `__init__.py`
+
+Após isso, todo arquivo criado, por garantia, poderá começar com `test_`. Além disso, podemos excluir o arquivo `tests.py`.
+
+Após isso, vale ressaltar que os arquivos criados para testes devem ter a importação do TestCase.
