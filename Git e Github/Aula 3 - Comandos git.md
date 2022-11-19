@@ -133,3 +133,8 @@ Usado para pegar as modificações que foram feitas no repositório do GitHub. S
 ```
 git pull origin master
 ```
+
+## Correção caso o .gitignore não esteja funcionando
+```
+git rm -r --cached .
+```
