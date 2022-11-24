@@ -40,16 +40,3 @@ Observe como o form pode ser separado.
   </div>
 {% endblock content %}
 ```
-
-## Modificação na view
-Como precisamos fazer um POST do nosso formulário, é importante modificarmos a view da seguinte forma:
-```
-def register_view(request):
-    if request.POST:
-        form = RegisterForm(request.POST) # Para reconhecer um POST caso tenha
-    else:
-        form = RegisterForm()
-    return render(request, 'authors/pages/register_view.html', {
-        'form': form,
-    })
-```
