@@ -8,7 +8,7 @@ Aos 20 anos, ainda com dúvida de qual carreira seguir, resolvi mergulhar de cab
 
 No mundo da programação, com o passar do tempo, nós aprendemos muitas coisas bem legais. Algumas coisas são fáceis por serem mais simples e precisarem de pouca dedicação para compreender enquanto outras são mais difíceis por serem mais complexas e precisarem de maior dedicação, exemplos e uma ótima didática para aprender.
 
-Sendo assim, resolvi criar este repositório a fim de ajudar qualquer um que esteja iniciando os seus estudos em alguma linguagem ou tecnologia. Em breve haverá mais conteúdos para serem estudados. Esperem que gostem. Forte abraço e bons estudos.
+Sendo assim, resolvi criar este repositório a fim de ajudar qualquer um que esteja iniciando os seus estudos em alguma linguagem ou tecnologia. Em breve haverá mais conteúdos para serem estudados. Espero que gostem. Forte abraço e bons estudos.
 
 ### Um verso
 > *"Respondeu Jesus: "Eu sou o caminho, a verdade e a vida. Ninguém vem ao Pai, a não ser por mim"*.

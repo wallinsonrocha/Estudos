@@ -40,7 +40,7 @@ Há uma mútua conexão entre o **register_view** e o **register_create**.
 Ele só irá entrar no **register_create** se clicarmos no botão do tipo submit. Ou seja, se enviarmos o formulário para a url se criação. (Vemos como fazer isso em "Implementando em nossa action")
 
 ## Direcionando-o para URLs
-Como criamos um direcionamento novo, precisamos implementá-lo em nossa `urls.py`.
+Como criamos um direcionamento novo, precisamos implementá-lo em nossa `urls.py` da aplicação.
 ```
 from . import views
 ...
