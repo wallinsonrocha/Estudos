@@ -5,18 +5,13 @@
 Observe como o form pode ser separado.
 
 ```
-{% extends 'global/base.html' %}
-
-{% block title %}Register | {% endblock title %}
-
-{% block content %}
   <div class="main-content center container">
     <h2>Register</h2>
   </div>
 
   <div class="main-content container">
     <form action="" method="POST">
-      {% csrf_token %} # Para evitar espaços em branco ou CSRFs
+      {% csrf_token %} # Para evitar espaços em branco e CSRFs
 
       <div class="form-content form-content-grid">
         {% for field in form %}
@@ -38,5 +33,4 @@ Observe como o form pode ser separado.
       </div>
     </form>
   </div>
-{% endblock content %}
 ```
