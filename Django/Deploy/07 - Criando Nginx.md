@@ -1,7 +1,5 @@
 # Deploy
 
-Os tópicos abaixo deverão ser criados.
-
 ## http
 Sem o SSL. Basta seguir o tutorial abaixo.
 ```
@@ -225,7 +223,7 @@ server {
 ```
 sudo nano /etc/nginx/sites-available/<nome>
 ```
-Após isso, basta copiar os arquivos nesse novo arquivo criado. Apenas um dos dois arquivos será copiado ou o http ou https.
+Após isso, basta copiar os arquivos nesse novo arquivo criado.
 
 ## Ativando link do projeto
 Após copiar, basta devemos tornar o site reconhecido pelo Nginx.

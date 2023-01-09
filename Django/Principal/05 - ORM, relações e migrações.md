@@ -50,6 +50,20 @@ class Recipes(models.Model):
 Supomos que um dos atributos depende de uma classe para ser preenchida. Para fazer a relação entre elas, a configuração é a seguinte:
 
 
+### OneToOne
+**models.OneToOneField()**
+```
+from django.contrib.auth import get_user_model
+from django.db import models
+
+User = get_user_model()
+
+
+class Profile(models.Model):
+    author = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(default='', blank=True)
+```
+
 ### ManyToOne
 **models.ForeignKey()**
 ```
