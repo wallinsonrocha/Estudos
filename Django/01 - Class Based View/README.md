@@ -1,0 +1,1 @@
+Veja [aqui](https://github.com/luizomf/curso-django-projeto1/blob/73cdd010d75d78008f09b311fdc4c03ac13e5fb8/recipes/views.py) alguns exemplo.

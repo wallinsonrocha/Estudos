@@ -18,6 +18,10 @@ adopts =
 markers =
   slow: Run tests that are slow
   fast: Run fast tests
+filterwarnings =
+    error
+    ignore::UserWarning
+    ignore:function ham\(\) is deprecated:DeprecationWarning
 ```
 
 ## Iniciando testes
