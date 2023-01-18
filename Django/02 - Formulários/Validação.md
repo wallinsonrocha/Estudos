@@ -2,6 +2,8 @@
 
 ## Validar campo específico
 
+A validação é feita juntamente com a classe criadora do formulário que estamos usando.
+
 Devemos colocar o nome do campo depois de **clean_**. Observe o exemplo abaixo. Basta colocar a função dentro da classe que ela será executada automaticamente.
 
 ```
