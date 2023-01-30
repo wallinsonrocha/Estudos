@@ -12,7 +12,6 @@ REST_FRAMEWORK = {
 
 **Importação**
 ```
-from rest_framework.generics import ListCreateAPIView
 from rest_framework.pagination import PageNumberPagination
 ```
 

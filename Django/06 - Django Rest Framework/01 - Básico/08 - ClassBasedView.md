@@ -41,3 +41,5 @@ class RecipeAPI(ListCreateAPIView):
     queryset = Recipe.objects.get_published()
     serialzer_class = RecipeSerializer
 ```
+
+[Outro exemplo](https://github.com/luizomf/curso-django-projeto1/blob/f7a82d235aae0466917fa7bc97c2d4e3e6a4d5ec/recipes/views/api.py)

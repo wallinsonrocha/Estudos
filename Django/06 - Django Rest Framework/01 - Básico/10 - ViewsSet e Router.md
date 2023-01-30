@@ -105,3 +105,5 @@ urlpatterns = [
 ```
 
 Dessa forma não seria mais necessário especificar os métodos e as funções em nossa ViewSet.
+
+[Outro exemplo](https://github.com/luizomf/curso-django-projeto1/blob/561dfebffad5bb7df6700a1659b97ec27d4efa14/recipes/views/api.py)
