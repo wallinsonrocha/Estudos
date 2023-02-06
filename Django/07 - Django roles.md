@@ -2,6 +2,9 @@
 
 Através do django roles nós poderemos editar as permissões de cada usuário do nosso sistema.
 
+
+[Documentação](https://django-role-permissions.readthedocs.io/en/stable/quickstart.html)
+
 ## Instalação
 ```
 pip install django-role-permissions
