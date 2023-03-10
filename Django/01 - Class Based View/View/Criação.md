@@ -1,5 +1,22 @@
 # Django
 
+Uma Class-Based View (CBV) é uma classe do Python que define a lógica de uma view em uma aplicação Django. A View é a classe base de todas as CBVs no Django e oferece uma maneira simples de lidar com diferentes tipos de requisições HTTP em uma única classe.
+
+A estrutura de uma View consiste em 5 métodos principais:
+
+- `dispatch`: É o primeiro método chamado para todas as requisições e é responsável por redirecionar a requisição para um dos métodos abaixo, dependendo do tipo de requisição recebida.
+- `get`: Lida com requisições GET.
+- `post`: Lida com requisições POST.
+- `put`: Lida com requisições PUT.
+- `delete`: Lida com requisições DELETE.
+
+O método `dispatch` é um método interno da View e é chamado automaticamente pelo framework do Django para cada requisição que é feita à view. Ele é responsável por determinar o tipo de requisição e redirecionar a requisição para o método correspondente (`get`, `post`, `put`, `delete`). Caso a requisição não seja de um tipo suportado, o método `dispatch` retorna um erro HTTP 405 Method Not Allowed.
+
+Cada um dos métodos acima (`get`, `post`, `put`, `delete`) é responsável por lidar com as respectivas requisições HTTP e deve retornar uma resposta HTTP apropriada. Por exemplo, o método `get` pode retornar uma resposta HTTP que contém um modelo ou uma lista de modelos (em formato HTML, JSON, XML etc.). O método `post` pode ser usado para salvar um novo modelo na base de dados.
+
+Além desses métodos principais, uma CBV também pode ter outros métodos personalizados que são usados para realizar outras tarefas específicas.
+
+
 ## Funções da class based view View
 
 A `View` é uma classe base do Django que não fornece nenhuma funcionalidade específica, mas é útil como uma classe base para outras views. Aqui estão algumas das funções da `View`:
