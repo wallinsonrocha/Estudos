@@ -46,55 +46,42 @@ A `View` é uma classe base do Django que não fornece nenhuma funcionalidade es
 - `trace`: é o método que lida com requisições `TRACE`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `TRACE`.
 
 
-```
-from authors.forms.recipe_form import AuthorRecipeForm
-from django.contrib import messages
-from django.http.response import Http404
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.views import View
-from recipes.models import Recipe
+## Estrutura de uma Class-Based View (CBV) View e suas funções
 
+```python
+from django.views.generic import View
 
-class DashboardRecipe(View):
-    def get(self, request, id):
-        recipe = Recipe.objects.filter(
-            is_published=False,
-            author=request.user,
-            pk=id,
-        ).first()
+class MinhaView(View):
 
-        if not recipe:
-            raise Http404()
-
-        form = AuthorRecipeForm(
-            data=request.POST or None,
-            files=request.FILES or None,
-            instance=recipe
-        )
-
-        if form.is_valid():
-            # Agora, o form é válido e eu posso tentar salvar
-            recipe = form.save(commit=False)
-
-            recipe.author = request.user
-            recipe.preparation_steps_is_html = False
-            recipe.is_published = False
-
-            recipe.save()
-
-            messages.success(request, 'Sua receita foi salva com sucesso!')
-            return redirect(
-                reverse('authors:dashboard_recipe_edit', args=(id,))
-            )
-
-        return render(
-            request,
-            'authors/pages/dashboard_recipe.html',
-            context={
-                'form': form
-            }
-        )
+    def dispatch(self, request, *args, **kwargs):
+        # Método que é chamado para redirecionar a view para os outros métodos abaixo, dependendo do tipo de request
+        if request.method == 'GET':
+            return self.get(request, *args, **kwargs)
+        elif request.method == 'POST':
+            return self.post(request, *args, **kwargs)
+        elif request.method == 'PUT':
+            return self.put(request, *args, **kwargs)
+        elif request.method == 'DELETE':
+            return self.delete(request, *args, **kwargs)
+        else:
+            # Retorna um erro 405 Method Not Allowed caso o método HTTP não seja suportado
+            return HttpResponseNotAllowed(['GET', 'POST', 'PUT', 'DELETE'])
+            
+    def get(self, request, *args, **kwargs):
+        # Método que lida com requisições GET
+        return HttpResponse('Requisição GET recebida!')
+        
+    def post(self, request, *args, **kwargs):
+        # Método que lida com requisições POST
+        return HttpResponse('Requisição POST recebida!')
+        
+    def put(self, request, *args, **kwargs):
+        # Método que lida com requisições PUT
+        return HttpResponse('Requisição PUT recebida!')
+        
+    def delete(self, request, *args, **kwargs):
+        # Método que lida com requisições DELETE
+        return HttpResponse('Requisição DELETE recebida!')
 ```
 
 ## Urls
