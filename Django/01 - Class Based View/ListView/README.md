@@ -1,5 +1,85 @@
 # Django
 
+## Aqui estão alguns dos principais atributos de uma ListView no Django:
+
+template_name: O nome do template que a ListView irá utilizar para renderizar os dados. Por padrão, o nome do template deve seguir a convenção "model_list.html", onde "model" é o nome do modelo em minúsculo. Por exemplo, se o modelo for Product, o nome do template padrão seria "product_list.html".
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+```
+
+model: O modelo que será utilizado para recuperar os objetos a serem exibidos na lista.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+```
+queryset: Uma consulta personalizada que é usada para obter os objetos a serem exibidos na lista. Se o queryset for fornecido, o model será ignorado.
+Exemplo:
+```
+class ProductListView(ListView):
+    template_name = "products.html"
+
+    def get_queryset(self):
+        return Product.objects.filter(is_available=True)
+```
+context_object_name: O nome da variável de contexto que contém a lista de objetos a serem exibidos no template. Por padrão, essa variável é chamada de object_list.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+    context_object_name = "products"
+```
+paginate_by: O número de objetos por página. Quando a lista é longa, é comum usar a paginação para dividir a lista em várias páginas. O valor padrão é None, o que significa que a paginação não será usada.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+    paginate_by = 10
+```
+ordering: A ordem em que os objetos são exibidos na lista. O valor padrão é None, o que significa que a ordem será determinada pelo modelo.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+    ordering = "-created_at"
+```
+paginate_orphans: O número mínimo de objetos necessários na última página. Isso é útil quando a paginação é usada para evitar páginas com apenas alguns objetos.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+    paginate_by = 10
+    paginate_orphans = 3
+```
+allow_empty: Se definido como False, a ListView retornará um erro 404 quando a lista estiver vazia.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+    allow_empty = False
+```
+context_data: Um dicionário de dados adicionais para serem adicionados ao contexto do template.
+Exemplo:
+```
+class ProductListView(ListView):
+    model = Product
+    template_name = "products.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = "Lista de Produtos"
+        return context
+```
+
 ## Funções de ListView
 
 As `ListViews` do Django são uma forma conveniente de exibir um conjunto de dados em uma lista. Algumas das funções que elas fornecem são:
