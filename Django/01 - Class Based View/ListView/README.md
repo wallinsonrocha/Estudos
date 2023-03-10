@@ -1,5 +1,34 @@
 # Django
 
+## Funções de ListView
+
+As `ListViews` do Django são uma forma conveniente de exibir um conjunto de dados em uma lista. Algumas das funções que elas fornecem são:
+
+- **`model`**: define o modelo a ser usado para recuperar os objetos a serem exibidos.
+
+- **`template_name`**: define o nome do template a ser usado para renderizar a lista.
+
+- **`queryset`**: define o conjunto de objetos a serem exibidos na lista.
+
+- **`context_object_name`**: define o nome da variável de contexto que contém a lista de objetos.
+
+- **`paginate_by`**: define o número de objetos a serem exibidos por página, habilitando a paginação.
+
+- **`ordering`**: define a ordem em que os objetos são exibidos na lista.
+
+- **`get_context_data()`**: adiciona dados adicionais ao contexto do template.
+
+- **`get_queryset()`**: personaliza o queryset para recuperar os objetos desejados.
+
+- **`get()`**: manipula solicitações GET.
+
+- **`post()`**: manipula solicitações POST.
+
+- **`put()`**: manipula solicitações PUT.
+
+- **`delete()`**: manipula solicitações DELETE.
+
+
 ## Base para home, search e category.
 ```
 from django.views.generic import ListView
