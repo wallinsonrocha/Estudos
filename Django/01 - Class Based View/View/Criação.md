@@ -1,7 +1,33 @@
 # Django
 
-## Class Based View 
-As class based views é uma forma alternativa de construir views para a nossa aplicação. Supomos que fora criada um arquivo chamado `dashboard_recipe.py`.
+## Funções da class based view View
+
+A `View` é uma classe base do Django que não fornece nenhuma funcionalidade específica, mas é útil como uma classe base para outras views. Aqui estão algumas das funções da `View`:
+
+- `dispatch`: é o método que chama o método correto da view com base no método HTTP da requisição. Por padrão, é chamado um dos métodos `get`, `post`, `put`, `delete`, `head`, `options` ou `trace`, dependendo do método HTTP. Este método geralmente não precisa ser sobrescrito, a menos que você esteja criando um comportamento especializado.
+
+- `http_method_not_allowed`: é chamado se a requisição usa um método HTTP não permitido para a view (por exemplo, uma requisição `POST` para uma view que não permite `POST`). Por padrão, ele retorna uma resposta `HttpResponseNotAllowed`, mas pode ser sobrescrito para personalizar o comportamento.
+
+- `options`: é o método chamado para lidar com uma requisição `OPTIONS` na view. Por padrão, ele retorna uma resposta com um cabeçalho `Allow` contendo os métodos HTTP permitidos para a view.
+
+- `as_view`: é um método estático que retorna uma função que pode ser chamada com uma instância da classe para processar uma requisição. É usado para conectar a view a uma URL. Por exemplo, `url(r'^myurl/$', MyView.as_view(), name='myview')`.
+
+- `setup`: é o método que é chamado quando a view é inicializada. Pode ser usado para inicializar coisas como variáveis de classe ou objetos de banco de dados.
+
+- `get`: é o método que lida com requisições `GET`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `GET`.
+
+- `post`: é o método que lida com requisições `POST`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `POST`.
+
+- `put`: é o método que lida com requisições `PUT`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `PUT`.
+
+- `delete`: é o método que lida com requisições `DELETE`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `DELETE`.
+
+- `head`: é o método que lida com requisições `HEAD`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `HEAD`.
+
+- `options`: é o método que lida com requisições `OPTIONS`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `OPTIONS`.
+
+- `trace`: é o método que lida com requisições `TRACE`. É aqui que você deve colocar a maior parte do seu código para lidar com requisições `TRACE`.
+
 
 ```
 from authors.forms.recipe_form import AuthorRecipeForm
