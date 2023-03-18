@@ -112,6 +112,13 @@ Podemos coletá-los através do seguinte código:
 python manage.py collectstatic
 ```
 
+## MEDIA_URL
+Também há uma configuração para ela.
+```
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+```
+
 ## Caso necessário. Em `urls.py` do projeto.
 ```
 from django.conf.urls.static import static
