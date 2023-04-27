@@ -70,7 +70,7 @@ git branch master
 
 Para mudar de branch, caso haja outras:
 ```
-git checkpoint <branch>
+git checkout <branch>
 ```
 Assim iremos carregar os arquivos que existem nessa branch.
 
