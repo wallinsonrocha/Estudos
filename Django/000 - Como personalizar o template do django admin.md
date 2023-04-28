@@ -228,3 +228,9 @@ class FoodAdmin(admin.ModelAdmin):
 ```
 
 Nesse caso, todos os itens selecionados terão o seu titulo mudado para "Olá".
+
+---
+
+## Recomendação de estudo
+
+Você pode estudar um pouco mais através desse [site](https://books.agiliq.com/projects/django-admin-cookbook/en/latest/custom_button.html).
