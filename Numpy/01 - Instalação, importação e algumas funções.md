@@ -57,4 +57,3 @@ i, j = np.where(cond)
 ```
 
 Nesse caso ele irá retornar as variáveis i e j representando, respectivamente, linha e coluna. Não obstante, podemos utilizar para outras finalidades, também.
-```
