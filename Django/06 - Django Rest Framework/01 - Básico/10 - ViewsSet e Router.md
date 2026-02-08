@@ -81,7 +81,7 @@ urlpatterns = [
 
 ## Router
 
-Nós podemos simplificar a nomeação dos parâmetros com o simple router.
+Nós podemos simplificar a nomeação dos parâmetros com o `SimpleRouter`.
 
 **Importação**
 ```

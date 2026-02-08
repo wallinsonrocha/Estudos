@@ -12,13 +12,16 @@ pip install pip --upgrade
 
 ## Iniciar projeto django
 Precisamos, primeiramente, gerar os arquivos que serão utilizados para utilizar o Django.
+
 ```
 django-admin startproject projeto .
 ```
+
 Esse ponto serve para indicar que o projeto deve ser criado na mesma pasta que estamos utilizando. Assim será criado um arquivo chamado "manage.py"
 
 
 Para iniciar o servidor em modo de desenvolvimento:
+
 ```
 python manage.py runserver
 ```
@@ -31,6 +34,7 @@ python manage.py startapp nome
 ```
 
 Será criado uma pasta com vários arquivos. As funções que seriam criadas no arquivo urls, serão criadas em **view**. Dentro dela iremos fazer alguns imports para que a função possa ser executada e criá-las.
+
 ```
 from django.http import HttpResponse
 
@@ -77,6 +81,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'recipes',  
 ]
 ```
