@@ -1,6 +1,6 @@
-# 🏗️ Guia Completo: DDD + Clean Code com FastAPI
+# ️ Guia Completo: DDD + Clean Code com FastAPI
 
-## 📚 Índice
+##  Índice
 
 1. [Introdução ao DDD](#introdução-ao-ddd)
 2. [Princípios Fundamentais](#princípios-fundamentais)
@@ -16,7 +16,7 @@
 
 ---
 
-## 🎯 Introdução ao DDD
+##  Introdução ao DDD
 
 ### O que é Domain-Driven Design?
 
@@ -24,13 +24,13 @@ DDD **não é sobre pastas e arquivos**. É sobre **organizar o código em torno
 
 **Exemplo prático:**
 ```
-❌ ERRADO - Organizado por tecnologia:
+ ERRADO - Organizado por tecnologia:
 /controllers
 /services  
 /models
 /utils
 
-✅ CERTO - Organizado por domínio:
+ CERTO - Organizado por domínio:
 /modules
   /user      ← Tudo sobre usuários
   /auth      ← Tudo sobre autenticação
@@ -46,14 +46,14 @@ DDD **não é sobre pastas e arquivos**. É sobre **organizar o código em torno
 
 ---
 
-## 🧩 Princípios Fundamentais
+##  Princípios Fundamentais
 
 ### 1. Separação de Responsabilidades (SRP)
 
 Cada classe tem **UMA** responsabilidade.
 
 ```python
-# ❌ ERRADO - Classe faz tudo
+#  ERRADO - Classe faz tudo
 class UserService:
     def create_user(self, data):
         # Valida
@@ -63,7 +63,7 @@ class UserService:
         # Gera log
         pass
 
-# ✅ CERTO - Cada classe uma responsabilidade
+#  CERTO - Cada classe uma responsabilidade
 class CreateUserUseCase:
     def execute(self, data):
         # Apenas orquestra
@@ -85,12 +85,12 @@ class MailProvider:
 **Dependa de abstrações, não de implementações.**
 
 ```python
-# ❌ ERRADO - Depende de implementação concreta
+#  ERRADO - Depende de implementação concreta
 class CreateUserUseCase:
     def __init__(self):
         self.repo = SQLUserRepository()  # ← Acoplamento!
 
-# ✅ CERTO - Depende de abstração (interface)
+#  CERTO - Depende de abstração (interface)
 class CreateUserUseCase:
     def __init__(self, repo: UserRepository):  # ← Interface!
         self.repo = repo
@@ -106,7 +106,7 @@ use_case = CreateUserUseCase(FakeUserRepository())     # Testes
 **Aberto para extensão, fechado para modificação.**
 
 ```python
-# ✅ Adicionar nova implementação sem modificar código existente
+#  Adicionar nova implementação sem modificar código existente
 class EmailProvider(ABC):
     @abstractmethod
     def send(self, email): pass
@@ -119,29 +119,29 @@ class AwsSESProvider(EmailProvider): ...  # ← Nova, sem quebrar nada
 
 ---
 
-## 🏛️ Arquitetura em Camadas
+## ️ Arquitetura em Camadas
 
 ```
 ┌─────────────────────────────────────────────┐
-│         📱 PRESENTATION LAYER               │
+│          PRESENTATION LAYER               │
 │    FastAPI (routes, controllers, schemas)  │
 │    - Recebe HTTP                            │
 │    - Valida entrada                         │
 │    - Retorna JSON                           │
 ├─────────────────────────────────────────────┤
-│         🎯 APPLICATION LAYER                │
+│          APPLICATION LAYER                │
 │         Use Cases (regras de aplicação)    │
 │    - Orquestra fluxo                        │
 │    - Regras de negócio                      │
 │    - Independente de framework              │
 ├─────────────────────────────────────────────┤
-│         💼 DOMAIN LAYER                     │
+│          DOMAIN LAYER                     │
 │    Entities, Value Objects, Interfaces     │
 │    - Regras de negócio puras                │
 │    - Sem dependências externas              │
 │    - Coração da aplicação                   │
 ├─────────────────────────────────────────────┤
-│         🔧 INFRASTRUCTURE LAYER             │
+│          INFRASTRUCTURE LAYER             │
 │    Repositories, Providers, Database        │
 │    - Detalhes técnicos                      │
 │    - Implementações concretas               │
@@ -153,32 +153,32 @@ class AwsSESProvider(EmailProvider): ...  # ← Nova, sem quebrar nada
 
 ---
 
-## 📁 Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
-📦 backend/
-├── 📁 app/
-│   ├── 📁 core/                    ← Configurações centrais
+ backend/
+├──  app/
+│   ├──  core/                    ← Configurações centrais
 │   │   ├── config.py               ← Settings (env, secrets)
 │   │   ├── database.py             ← Conexão DB
 │   │   ├── security.py             ← JWT, hash de senha
 │   │   └── dependencies.py         ← Dependências compartilhadas
 │   │
-│   ├── 📁 common/                  ← Utilitários compartilhados
+│   ├──  common/                  ← Utilitários compartilhados
 │   │   ├── exceptions.py           ← Exceções customizadas
 │   │   ├── responses.py            ← Respostas padronizadas
 │   │   └── utils.py                ← Helpers gerais
 │   │
-│   ├── 📁 providers/               ← Abstrações de terceiros
-│   │   └── 📁 mail/
+│   ├──  providers/               ← Abstrações de terceiros
+│   │   └──  mail/
 │   │       ├── interfaces/         ← Contratos
 │   │       │   └── mail_provider.py
 │   │       └── implementations/    ← Implementações concretas
 │   │           ├── sendgrid_provider.py
 │   │           └── smtp_provider.py
 │   │
-│   ├── 📁 modules/                 ← Lógica de negócio (DDD)
-│   │   └── 📁 user/                ← Bounded Context
+│   ├──  modules/                 ← Lógica de negócio (DDD)
+│   │   └──  user/                ← Bounded Context
 │   │       ├── models.py           ← Entidade do banco
 │   │       ├── schemas.py          ← DTOs (Pydantic)
 │   │       ├── interfaces/         ← Contratos do módulo
@@ -203,7 +203,7 @@ class AwsSESProvider(EmailProvider): ...  # ← Nova, sem quebrar nada
 
 ---
 
-## ⚙️ CORE - Configurações Centrais
+## ️ CORE - Configurações Centrais
 
 ### `config.py` - Configurações com Pydantic
 
@@ -237,10 +237,10 @@ settings = get_settings()
 ```
 
 **Por quê?**
-- ✅ Validação automática de tipos
-- ✅ Carrega do .env automaticamente
-- ✅ Singleton (uma única instância)
-- ✅ Type hints para autocomplete
+-  Validação automática de tipos
+-  Carrega do .env automaticamente
+-  Singleton (uma única instância)
+-  Type hints para autocomplete
 
 ---
 
@@ -350,7 +350,7 @@ def get_me(user_id: str = Depends(get_current_user_id)):
 
 ---
 
-## 🛠️ COMMON - Utilitários Compartilhados
+## ️ COMMON - Utilitários Compartilhados
 
 ### `exceptions.py` - Exceções de Domínio
 
@@ -426,7 +426,7 @@ return error("Validação falhou", errors={"email": "Inválido"})
 
 ---
 
-## 🔌 PROVIDERS - Abstrações de Terceiros
+##  PROVIDERS - Abstrações de Terceiros
 
 Providers isolam dependências externas (email, storage, pagamento, etc).
 
@@ -522,7 +522,7 @@ class SMTPProvider(MailProvider):
 ### Por que usar Providers?
 
 ```python
-# ✅ Use case depende da INTERFACE, não da implementação
+#  Use case depende da INTERFACE, não da implementação
 class CreateUserUseCase:
     def __init__(
         self,
@@ -551,7 +551,7 @@ use_case = CreateUserUseCase(
 
 ---
 
-## 📦 MODULES - Lógica de Negócio (DDD)
+##  MODULES - Lógica de Negócio (DDD)
 
 Cada módulo = 1 Bounded Context (contexto delimitado).
 
@@ -598,10 +598,10 @@ class User(Base):
 ```
 
 **Características:**
-- ✅ Apenas mapeamento ORM
-- ✅ Sem lógica de negócio complexa
-- ✅ UUID para segurança
-- ✅ Timestamps automáticos
+-  Apenas mapeamento ORM
+-  Sem lógica de negócio complexa
+-  UUID para segurança
+-  Timestamps automáticos
 
 ---
 
@@ -646,10 +646,10 @@ class UserResponseSchema(BaseModel):
 ```
 
 **Por quê?**
-- ✅ Validação automática na entrada
-- ✅ Documentação automática (Swagger)
-- ✅ Segurança (não expõe senha)
-- ✅ Type hints
+-  Validação automática na entrada
+-  Documentação automática (Swagger)
+-  Segurança (não expõe senha)
+-  Type hints
 
 ---
 
@@ -765,9 +765,9 @@ class UserRepositoryImpl(UserRepository):
 ```
 
 **Responsabilidades:**
-- ✅ APENAS persistência de dados
-- ✅ Sem regras de negócio complexas
-- ✅ Implementa TODA a interface
+-  APENAS persistência de dados
+-  Sem regras de negócio complexas
+-  Implementa TODA a interface
 
 ---
 
@@ -880,10 +880,10 @@ class UpdateUserUseCase:
 ```
 
 **Características dos Use Cases:**
-- ✅ **Uma responsabilidade** - Um caso de uso
-- ✅ **Regras explícitas** - Comentadas e claras
-- ✅ **Independente de framework** - Não sabe que é FastAPI
-- ✅ **Testável** - Mock do repositório
+-  **Uma responsabilidade** - Um caso de uso
+-  **Regras explícitas** - Comentadas e claras
+-  **Independente de framework** - Não sabe que é FastAPI
+-  **Testável** - Mock do repositório
 
 ---
 
@@ -961,10 +961,10 @@ class UserController:
 ```
 
 **Por que separar controller?**
-- ✅ Orquestra dependências
-- ✅ Pode ser usado por REST, GraphQL, CLI
-- ✅ Testes sem HTTP
-- ✅ Routes fica limpo
+-  Orquestra dependências
+-  Pode ser usado por REST, GraphQL, CLI
+-  Testes sem HTTP
+-  Routes fica limpo
 
 ---
 
@@ -1006,7 +1006,7 @@ async def update_user(user_id: str, user_data: UserUpdateSchema):
 
 ---
 
-## 🔄 Fluxo Completo de uma Requisição
+##  Fluxo Completo de uma Requisição
 
 ```
 1. HTTP Request
@@ -1065,7 +1065,7 @@ async def update_user(user_id: str, user_data: UserUpdateSchema):
 
 ---
 
-## 🧪 TESTES
+##  TESTES
 
 ### Estrutura de Testes
 
@@ -1185,27 +1185,27 @@ def test_get_user_endpoint():
 
 ---
 
-## 🎯 BOAS PRÁTICAS E VERDADES
+##  BOAS PRÁTICAS E VERDADES
 
-### ✅ O que fazer
+###  O que fazer
 
 1. **Use Cases com UMA responsabilidade**
    ```python
-   # ✅ CERTO
+   #  CERTO
    CreateUserUseCase
    UpdateUserEmailUseCase
    DeactivateUserUseCase
    
-   # ❌ ERRADO
+   #  ERRADO
    UserManagementService  # Faz tudo
    ```
 
 2. **Dependa de interfaces, não implementações**
    ```python
-   # ✅ CERTO
+   #  CERTO
    def __init__(self, repo: UserRepository):
    
-   # ❌ ERRADO
+   #  ERRADO
    def __init__(self, repo: UserRepositoryImpl):
    ```
 
@@ -1218,10 +1218,10 @@ def test_get_user_endpoint():
 
 4. **Soft delete sempre que possível**
    ```python
-   # ✅ CERTO
+   #  CERTO
    user.is_active = False
    
-   # ❌ EVITE (perde dados)
+   #  EVITE (perde dados)
    db.delete(user)
    ```
 
@@ -1232,16 +1232,16 @@ def test_get_user_endpoint():
    Repository            → Validação de persistência
    ```
 
-### ❌ O que evitar
+###  O que evitar
 
 1. **Lógica de negócio no controller**
    ```python
-   # ❌ ERRADO
+   #  ERRADO
    async def create_user(user_data):
        if exists_email(user_data.email):  # ← Regra aqui!
            raise Exception()
    
-   # ✅ CERTO
+   #  CERTO
    async def create_user(user_data):
        use_case = CreateUserUseCase(repo)
        return await use_case.execute(user_data)  # ← Regra no use case
@@ -1249,12 +1249,12 @@ def test_get_user_endpoint():
 
 2. **Use case acessar banco diretamente**
    ```python
-   # ❌ ERRADO
+   #  ERRADO
    class CreateUserUseCase:
        def execute(self, data):
            db.query(User).filter(...)  # ← Acoplamento!
    
-   # ✅ CERTO
+   #  CERTO
    class CreateUserUseCase:
        def execute(self, data):
            self.repo.get_by_email(...)  # ← Via interface
@@ -1262,28 +1262,28 @@ def test_get_user_endpoint():
 
 3. **Retornar entidades do banco direto**
    ```python
-   # ❌ ERRADO
+   #  ERRADO
    return user  # ← User ORM model
    
-   # ✅ CERTO
+   #  CERTO
    return UserResponseSchema.model_validate(user)  # ← DTO
    ```
 
-### 💡 Quando usar DDD?
+###  Quando usar DDD?
 
-**✅ USE quando:**
+** USE quando:**
 - Projeto médio/grande (vai crescer)
 - Múltiplos desenvolvedores
 - Regras de negócio complexas
 - Precisa trocar tecnologias (banco, email, etc)
 
-**❌ NÃO USE quando:**
+** NÃO USE quando:**
 - Projeto muito simples (CRUD básico)
 - Time pequeno, prazo curto
 - Prototipagem rápida
 - Script one-off
 
-### 🎓 Princípios para lembrar
+###  Princípios para lembrar
 
 1. **SOLID**
    - **S**ingle Responsibility
@@ -1306,7 +1306,7 @@ def test_get_user_endpoint():
 
 ---
 
-## 📚 Resumo Final
+##  Resumo Final
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -1354,7 +1354,7 @@ Use Case depende de → INTERFACE (abstração)
 
 ---
 
-## 🎯 Checklist do DDD Perfeito
+##  Checklist do DDD Perfeito
 
 - [ ] Cada use case tem UMA responsabilidade
 - [ ] Use cases dependem de interfaces, não implementações
